@@ -54,21 +54,22 @@ public class RunningScript : MonoBehaviour {
 		//rigidbody2D.AddForce (new Vector2 (0, jumpForce));
 		//jumpForce = 0;
 		//rigidbody2D.velocity.y += jumpHeight;
+		int cameraRotation = Mathf.RoundToInt(camera.currentRotation.z);
 		if (jump)
 		{
-			if (camera.currentRotation.z > 89 && camera.currentRotation.z < 91)
+			if (cameraRotation == 90)
 			{
 				rigidbody2D.velocity += new Vector2 (-jumpSpeed * (1/jumpTimer), 0);
 			}
-			else if (camera.currentRotation.z > 179 && camera.currentRotation.z < 181)
+			else if (cameraRotation == 180)
 			{
 				rigidbody2D.velocity += new Vector2 (0, -jumpSpeed * (1/jumpTimer));
 			}
-			else if (camera.currentRotation.z > 269 && camera.currentRotation.z < 271)
+			else if (cameraRotation == 270)
 			{
 				rigidbody2D.velocity += new Vector2 (jumpSpeed * (1/jumpTimer), 0);
 			}
-			else if (camera.currentRotation.z > -1 && camera.currentRotation.z < 1)
+			else if (cameraRotation == 0)
 			{
 				rigidbody2D.velocity += new Vector2 (0, jumpSpeed * (1/jumpTimer));
 			}
