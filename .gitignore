@@ -11,3 +11,9 @@
 /*.userprefs
 /*.pidb
 /*.booproj
+
+# OS Files
+.DS_Store
+
+# Android builds
+/*.apk
