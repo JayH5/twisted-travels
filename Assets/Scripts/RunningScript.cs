@@ -18,14 +18,17 @@ public class RunningScript : MonoBehaviour {
 	public Vector2 movement;	
 
 	public bool jump = false;
-	
-	private SwipeHandler camera;
+
+	private bool touchingPlatform;
+
+	//private bool isFalling = false;
+	private SwipeHandler swipeHandler;
 
 	void Start()
 	{
 		//get player reference to change gravity and speed/direction
 		GameObject go = GameObject.Find ("Main Camera");	
-		camera = go.GetComponent<SwipeHandler> ();
+		swipeHandler = go.GetComponent<SwipeHandler> ();
 	}
 
 	void Update () {
@@ -38,6 +41,7 @@ public class RunningScript : MonoBehaviour {
 		if (jump)
 		{
 			jumpTimer += 1;
+			//touchingPlatform = false;
 			if (jumpTimer >= 20)
 			{
 				jumpTimer = 0;
@@ -46,6 +50,14 @@ public class RunningScript : MonoBehaviour {
 		}
 	}
 
+	/*void OnCollisionEnter () {
+		touchingPlatform = true;
+	}
+	
+	void OnCollisionExit () {
+		touchingPlatform = false;
+	}*/
+
 	void FixedUpdate(){
 		rigidbody2D.velocity = movement; //move the sprite every fixed update;
 
@@ -53,21 +65,22 @@ public class RunningScript : MonoBehaviour {
 		//rigidbody2D.AddForce (new Vector2 (0, jumpForce));
 		//jumpForce = 0;
 		//rigidbody2D.velocity.y += jumpHeight;
+		int cameraRotation = Mathf.RoundToInt(swipeHandler.currentRotation.z);
 		if (jump)
 		{
-			if (camera.currentRotation.z > 89 && camera.currentRotation.z < 91)
+			if (cameraRotation == 90)
 			{
 				rigidbody2D.velocity += new Vector2 (-jumpSpeed * (1/jumpTimer), 0);
 			}
-			else if (camera.currentRotation.z > 179 && camera.currentRotation.z < 181)
+			else if (cameraRotation == 180)
 			{
 				rigidbody2D.velocity += new Vector2 (0, -jumpSpeed * (1/jumpTimer));
 			}
-			else if (camera.currentRotation.z > 269 && camera.currentRotation.z < 271)
+			else if (cameraRotation == 270)
 			{
 				rigidbody2D.velocity += new Vector2 (jumpSpeed * (1/jumpTimer), 0);
 			}
-			else if (camera.currentRotation.z > -1 && camera.currentRotation.z < 1)
+			else if (cameraRotation == 0)
 			{
 				rigidbody2D.velocity += new Vector2 (0, jumpSpeed * (1/jumpTimer));
 			}

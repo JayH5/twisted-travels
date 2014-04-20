@@ -5,6 +5,8 @@ public class SwipeHandler : MonoBehaviour {
 
 	//swipe vars
 	public float minMovement = 20.0f;
+
+	// Flags to enable/disable touch detection
 	public bool sendUpMessage = true;
 	public bool sendDownMessage = true;
 	public bool sendLeftMessage = true;
@@ -17,7 +19,6 @@ public class SwipeHandler : MonoBehaviour {
 	//rotation vars
 	public int rotationStep = 10; //rotation degrees per step
 	public Vector3 currentRotation = new Vector3 (0, 0, 0); 
-
 	private int rotationDirection = 0; // -1 for clockwise, 1 for anti-clockwise
 	private Vector3 targetRotation;
 	private float rotangle; //testing
@@ -35,64 +36,98 @@ public class SwipeHandler : MonoBehaviour {
 
 	void Update ()
 	{
-		///////////////////////////////////////////Determines direction of swipe and sends the appropriate message//////////////////////////////
+		if (Input.GetKeyDown(KeyCode.Escape)) {	Application.Quit();	}
 
+		if (MessageTarget == null) { MessageTarget = gameObject; }
 
-
-		if (MessageTarget == null)
-			MessageTarget = gameObject;
-		foreach (var T in Input.touches)
+		if (!HandleKeyboardInput()) // Give precedence to keyboard controls
 		{
-			var P = T.position;
-			if (T.phase == TouchPhase.Began && SwipeID == -1)
+			HandleTouchInput ();
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//move camera with player.
+		transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
+
+	}
+
+	bool HandleKeyboardInput()
+	{
+		bool handled = false;
+		if (Input.GetKeyDown (KeyCode.Space))
+		{
+			currentRotation = gameObject.transform.eulerAngles;
+			controller.jump = true;
+			handled = true;
+		}
+		else if (Input.GetKeyDown (KeyCode.UpArrow))
+		{
+			MessageTarget.SendMessage ("OnSwipeUp", SendMessageOptions.DontRequireReceiver);
+			handled = true;
+		}
+		else if (Input.GetKeyDown (KeyCode.DownArrow))
+		{
+			MessageTarget.SendMessage ("OnSwipeDown", SendMessageOptions.DontRequireReceiver);
+			handled = true;
+		}
+		return handled;
+	}
+
+	bool HandleTouchInput()
+	{
+		bool handled = false;
+		foreach (var touch in Input.touches) // For each finger... (but only keep track of one)
+		{
+			var position = touch.position;
+			var fingerId = touch.fingerId;
+			if (touch.phase == TouchPhase.Began && fingerId != SwipeID) // Begin touch
 			{
-				SwipeID = T.fingerId;
-				StartPos = P;
+				SwipeID = fingerId;
+				StartPos = position;
+				handled = true;
 			}
-			else if (T.fingerId == SwipeID)
+			else if (touch.fingerId == SwipeID) // Continue touch detection
 			{
-				var delta = P - StartPos;
-				if (T.phase == TouchPhase.Moved && delta.magnitude > minMovement)
+				var delta = position - StartPos;
+				// Swipe detected if finger moved more than `minMovement`
+				if (touch.phase == TouchPhase.Moved && delta.magnitude > minMovement)
 				{
-					SwipeID = -1;
-					if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
+					SwipeID = -1; // Swipe detected, this gesture is complete
+					if (Mathf.Abs (delta.x) > Mathf.Abs (delta.y)) // Moved more horizontally than vertically
 					{
 						if (sendRightMessage && delta.x > 0)
 						{
-							MessageTarget.SendMessage("OnSwipeRight", SendMessageOptions.DontRequireReceiver);
+							MessageTarget.SendMessage ("OnSwipeRight", SendMessageOptions.DontRequireReceiver);
 						}
 						else if (sendLeftMessage && delta.x < 0)
 						{
-							MessageTarget.SendMessage("OnSwipeLeft", SendMessageOptions.DontRequireReceiver);
+							MessageTarget.SendMessage ("OnSwipeLeft", SendMessageOptions.DontRequireReceiver);
 						}
 					}
 					else
 					{
 						if (sendUpMessage && delta.y > 0)
 						{
-							MessageTarget.SendMessage("OnSwipeUp", SendMessageOptions.DontRequireReceiver);
+							MessageTarget.SendMessage ("OnSwipeUp", SendMessageOptions.DontRequireReceiver);
 						}
 						else if (sendDownMessage && delta.y < 0)
 						{
-							MessageTarget.SendMessage("OnSwipeDown", SendMessageOptions.DontRequireReceiver);
+							MessageTarget.SendMessage ("OnSwipeDown", SendMessageOptions.DontRequireReceiver);
 						}
 					}
+					handled = true;
 				}
-				else if (T.phase == TouchPhase.Canceled || T.phase == TouchPhase.Ended)	
+				// Tap detected if finger released without swipe being detected
+				else if (touch.phase == TouchPhase.Canceled || touch.phase == TouchPhase.Ended)
 				{
 					SwipeID = -1;
 					currentRotation = gameObject.transform.eulerAngles;
-					controller.jump = true;	
-					//player.jumpForce = 20000;
-					//StartCoroutine(wait());
+
+					controller.jump = true;
+					handled = true;
 				}
 			}
-
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//move camera with player.
-		transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
-
+		return handled;
 	}
 
 	void OnSwipeDown()
