@@ -18,8 +18,7 @@ public class RunningScript : MonoBehaviour {
 	public Vector2 movement;	
 
 	public bool jump = false;
-
-	private bool isFalling = false;
+	
 	private SwipeHandler camera;
 
 	void Start()

@@ -24,16 +24,13 @@ public class SwipeHandler : MonoBehaviour {
 	private bool rotDone = true;
 
 	//others
-	RunningScript player;
+	public PlatformerCharacter2D player;
+	public Platformer2DUserControl controller;
 
 	void Start()
 	{
 		transform.eulerAngles = new Vector3 (0, 0, 0);
 		print (currentRotation.z);
-
-		//get player reference to change gravity and speed/direction
-		GameObject go = GameObject.Find ("Player");	
-		player = go.GetComponent<RunningScript> ();
 	}
 
 	void Update ()
@@ -85,7 +82,7 @@ public class SwipeHandler : MonoBehaviour {
 				{
 					SwipeID = -1;
 					currentRotation = gameObject.transform.eulerAngles;
-					player.jump = true;	
+					controller.jump = true;	
 					//player.jumpForce = 20000;
 					//StartCoroutine(wait());
 				}
@@ -149,34 +146,38 @@ public class SwipeHandler : MonoBehaviour {
 			
 			if (currentRotation.z > 89 && currentRotation.z < 91)
 			{
-				player.speed = new Vector2 (0,4);
+				player.speedX = 0;
+				player.speedY = 1;
 				player.targetUp = new Vector3 (-1, 0, 0);
 				//player.transform.forward = new Vector3(0f, 0f, 1f);
 				player.gravityY = 0;
-				player.gravityX = 250;
+				player.gravityX = 25;
 			}
 			else if (currentRotation.z > 179 && currentRotation.z < 181)
 			{
-				player.speed = new Vector2 (-4,0);
+				player.speedX = -1;
+				player.speedY = 0;
 				player.targetUp = new Vector3 (0, -0.001f, 0); //not too sure why this has to be like this, but putting it as 1 makes the sprite face the opposite direction of motion... ???
 				//player.transform.forward = new Vector3(-1f, 0f, 0f);
-				player.gravityY = 250;
+				player.gravityY = 25;
 				player.gravityX = 0;
 			}
 			else if (currentRotation.z > 269 && currentRotation.z < 271)
 			{
-				player.speed = new Vector2 (0,-4);
+				player.speedX = 0;
+				player.speedY = -1;
 				player.targetUp = new Vector3 (1, 0, 0);
 				//player.transform.forward = new Vector3(0f, 0f, -1f);
 				player.gravityY = 0;
-				player.gravityX = -250;
+				player.gravityX = -25;
 			}
 			else if (currentRotation.z > -1 && currentRotation.z < 1)
 			{
-				player.speed = new Vector2 (4,0);
+				player.speedX = 1;
+				player.speedY = 0;
 				player.targetUp = new Vector3 (0, 1, 0);
 				//	player.transform.forward = new Vector3(-1f, 0f, 0f);
-				player.gravityY = -250;
+				player.gravityY = -25;
 				player.gravityX = 0;
 			}
 		}
