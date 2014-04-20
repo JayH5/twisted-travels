@@ -17,7 +17,6 @@ public class SwipeHandler : MonoBehaviour {
 	//rotation vars
 	public int rotationStep = 10; //rotation degrees per step
 	public Vector3 currentRotation = new Vector3 (0, 0, 0); 
-
 	private int rotationDirection = 0; // -1 for clockwise, 1 for anti-clockwise
 	private Vector3 targetRotation;
 	private float rotangle; //testing
@@ -38,6 +37,8 @@ public class SwipeHandler : MonoBehaviour {
 
 	void Update ()
 	{
+		if (Input.GetKeyDown(KeyCode.Escape)) { Application.Quit(); }
+
 		///////////////////////////////////////////Determines direction of swipe and sends the appropriate message//////////////////////////////
 
 
