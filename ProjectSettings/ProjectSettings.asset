@@ -79,7 +79,7 @@ PlayerSettings:
   productGUID: b19dc008bd24d9c4bb85a37910800e54
   iPhoneBundleVersion: 1.0
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 9
+  AndroidMinSdkVersion: 18
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   apiCompatibilityLevel: 2

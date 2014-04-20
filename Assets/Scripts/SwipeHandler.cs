@@ -44,53 +44,48 @@ public class SwipeHandler : MonoBehaviour {
 
 		if (MessageTarget == null)
 			MessageTarget = gameObject;
-		foreach (var T in Input.touches)
-		{
-			var P = T.position;
-			if (T.phase == TouchPhase.Began && SwipeID == -1)
-			{
-				SwipeID = T.fingerId;
-				StartPos = P;
-			}
-			else if (T.fingerId == SwipeID)
-			{
-				var delta = P - StartPos;
-				if (T.phase == TouchPhase.Moved && delta.magnitude > minMovement)
-				{
-					SwipeID = -1;
-					if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
-					{
-						if (sendRightMessage && delta.x > 0)
-						{
-							MessageTarget.SendMessage("OnSwipeRight", SendMessageOptions.DontRequireReceiver);
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			print("Space pressed..");
+			SwipeID = -1;
+			currentRotation = gameObject.transform.eulerAngles;
+			player.jump = true;	
+		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
+			MessageTarget.SendMessage ("OnSwipeUp", SendMessageOptions.DontRequireReceiver);
+		} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
+			MessageTarget.SendMessage ("OnSwipeDown", SendMessageOptions.DontRequireReceiver);
+		} else {
+			foreach (var T in Input.touches) {
+				var P = T.position;
+				if (T.phase == TouchPhase.Began && SwipeID == -1) {
+					SwipeID = T.fingerId;
+					StartPos = P;
+				} else if (T.fingerId == SwipeID) {
+					var delta = P - StartPos;
+					if (T.phase == TouchPhase.Moved && delta.magnitude > minMovement) {
+						SwipeID = -1;
+						if (Mathf.Abs (delta.x) > Mathf.Abs (delta.y)) {
+							if (sendRightMessage && delta.x > 0) {
+								MessageTarget.SendMessage ("OnSwipeRight", SendMessageOptions.DontRequireReceiver);
+							} else if (sendLeftMessage && delta.x < 0) {
+								MessageTarget.SendMessage ("OnSwipeLeft", SendMessageOptions.DontRequireReceiver);
+							}
+						} else {
+							if (sendUpMessage && delta.y > 0) {
+								MessageTarget.SendMessage ("OnSwipeUp", SendMessageOptions.DontRequireReceiver);
+							} else if (sendDownMessage && delta.y < 0) {
+								MessageTarget.SendMessage ("OnSwipeDown", SendMessageOptions.DontRequireReceiver);
+							}
 						}
-						else if (sendLeftMessage && delta.x < 0)
-						{
-							MessageTarget.SendMessage("OnSwipeLeft", SendMessageOptions.DontRequireReceiver);
-						}
-					}
-					else
-					{
-						if (sendUpMessage && delta.y > 0)
-						{
-							MessageTarget.SendMessage("OnSwipeUp", SendMessageOptions.DontRequireReceiver);
-						}
-						else if (sendDownMessage && delta.y < 0)
-						{
-							MessageTarget.SendMessage("OnSwipeDown", SendMessageOptions.DontRequireReceiver);
-						}
+					} else if (T.phase == TouchPhase.Canceled || T.phase == TouchPhase.Ended) {
+						SwipeID = -1;
+						currentRotation = gameObject.transform.eulerAngles;
+						player.jump = true;	
+						//player.jumpForce = 20000;
+						//StartCoroutine(wait());
 					}
 				}
-				else if (T.phase == TouchPhase.Canceled || T.phase == TouchPhase.Ended)	
-				{
-					SwipeID = -1;
-					currentRotation = gameObject.transform.eulerAngles;
-					player.jump = true;	
-					//player.jumpForce = 20000;
-					//StartCoroutine(wait());
-				}
-			}
 
+			}
 		}
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//move camera with player.

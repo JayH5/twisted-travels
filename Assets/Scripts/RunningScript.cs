@@ -18,6 +18,7 @@ public class RunningScript : MonoBehaviour {
 	public Vector2 movement;	
 
 	public bool jump = false;
+	private bool touchingPlatform;
 
 	private bool isFalling = false;
 	private SwipeHandler camera;
@@ -39,6 +40,7 @@ public class RunningScript : MonoBehaviour {
 		if (jump)
 		{
 			jumpTimer += 1;
+			//touchingPlatform = false;
 			if (jumpTimer >= 20)
 			{
 				jumpTimer = 0;
@@ -46,6 +48,14 @@ public class RunningScript : MonoBehaviour {
 			}
 		}
 	}
+
+	/*void OnCollisionEnter () {
+		touchingPlatform = true;
+	}
+	
+	void OnCollisionExit () {
+		touchingPlatform = false;
+	}*/
 
 	void FixedUpdate(){
 		rigidbody2D.velocity = movement; //move the sprite every fixed update;
