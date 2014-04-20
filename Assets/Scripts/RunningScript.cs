@@ -20,14 +20,14 @@ public class RunningScript : MonoBehaviour {
 	public bool jump = false;
 	private bool touchingPlatform;
 
-	private bool isFalling = false;
-	private SwipeHandler camera;
+	//private bool isFalling = false;
+	private SwipeHandler swipeHandler;
 
 	void Start()
 	{
 		//get player reference to change gravity and speed/direction
 		GameObject go = GameObject.Find ("Main Camera");	
-		camera = go.GetComponent<SwipeHandler> ();
+		swipeHandler = go.GetComponent<SwipeHandler> ();
 	}
 
 	void Update () {
@@ -64,7 +64,7 @@ public class RunningScript : MonoBehaviour {
 		//rigidbody2D.AddForce (new Vector2 (0, jumpForce));
 		//jumpForce = 0;
 		//rigidbody2D.velocity.y += jumpHeight;
-		int cameraRotation = Mathf.RoundToInt(camera.currentRotation.z);
+		int cameraRotation = Mathf.RoundToInt(swipeHandler.currentRotation.z);
 		if (jump)
 		{
 			if (cameraRotation == 90)
