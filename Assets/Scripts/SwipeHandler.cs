@@ -17,7 +17,7 @@ public class SwipeHandler : MonoBehaviour {
 	private int SwipeID = -1;
 
 	//rotation vars
-	public int rotationStep = 10; //rotation degrees per step
+	public int rotationStep = 5; //rotation degrees per step
 	public Vector3 currentRotation = new Vector3 (0, 0, 0); 
 	private int rotationDirection = 0; // -1 for clockwise, 1 for anti-clockwise
 	private Vector3 targetRotation;
@@ -26,7 +26,6 @@ public class SwipeHandler : MonoBehaviour {
 
 	//others
 	public PlatformerCharacter2D player;
-	public Platformer2DUserControl controller;
 
 	void Start()
 	{
@@ -44,7 +43,7 @@ public class SwipeHandler : MonoBehaviour {
 		{
 			HandleTouchInput ();
 		}
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 		//move camera with player.
 		transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
 
@@ -56,7 +55,7 @@ public class SwipeHandler : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space))
 		{
 			currentRotation = gameObject.transform.eulerAngles;
-			controller.jump = true;
+			player.jump = true;
 			handled = true;
 		}
 		else if (Input.GetKeyDown (KeyCode.UpArrow))
@@ -122,7 +121,7 @@ public class SwipeHandler : MonoBehaviour {
 					SwipeID = -1;
 					currentRotation = gameObject.transform.eulerAngles;
 
-					controller.jump = true;
+					player.jump = true;
 					handled = true;
 				}
 			}
@@ -154,22 +153,20 @@ public class SwipeHandler : MonoBehaviour {
 	{
 		currentRotation = gameObject.transform.eulerAngles;
 		targetRotation.z = (currentRotation.z + (90 * rotationDirection));
-		//print ("current is: " + currentRotation.z + " Target is: " + targetRotation.z);
 		StartCoroutine (objectRotationAnimation());
 	}
 
 	IEnumerator objectRotationAnimation()
 	{
 		// add rotation step to current rotation.
-		currentRotation.z += (rotationStep * rotationDirection);
-		//print ("current z angle during steps: " + currentRotation.z);
+		currentRotation.z += (rotationStep * rotationDirection * 0.2f);
 		gameObject.transform.eulerAngles = currentRotation;
 		
 		yield return new WaitForSeconds (0);
 		
-		if (((int)(currentRotation.z - 1) >
+		if (((int)(currentRotation.z) >
 		     (int)targetRotation.z && rotationDirection < 0)  ||  // for clockwise
-		    ((int)(currentRotation.z + 1) <  (int)targetRotation.z && rotationDirection > 0)) // for anti-clockwise
+		    ((int)(currentRotation.z) <  (int)targetRotation.z && rotationDirection > 0)) // for anti-clockwise
 		{
 			StartCoroutine (objectRotationAnimation());
 		}
@@ -217,11 +214,5 @@ public class SwipeHandler : MonoBehaviour {
 			}
 		}
 	}
-
-	/*IEnumerator wait()
-	{
-		yield return new WaitForSeconds(0.25f);
-		player.jumpForce = 0;
-	}*/
 
 }
