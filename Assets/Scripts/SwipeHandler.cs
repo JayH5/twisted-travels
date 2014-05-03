@@ -30,7 +30,7 @@ public class SwipeHandler : MonoBehaviour {
 	void Start()
 	{
 		transform.eulerAngles = new Vector3 (0, 0, 0);
-		print (currentRotation.z);
+		//print (currentRotation.z);
 	}
 
 	void Update ()
