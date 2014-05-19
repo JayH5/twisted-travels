@@ -26,10 +26,6 @@ namespace Gestures
 				return; // Give precedence to keyboard if enabled
 
 			HandleTouchInput();
-
-			//move camera with player.
-			//transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
-			//Debug.Log ("Gesture handler update");
 		}
 
 		bool HandleKeyboardInput()
@@ -48,6 +44,16 @@ namespace Gestures
 			else if (Input.GetKeyDown (KeyCode.DownArrow))
 			{
 				gestureReceiver.onSwipe(SwipeDirection.Down);
+				handled = true;
+			}
+			else if (Input.GetKeyDown(KeyCode.LeftArrow))
+			{
+				gestureReceiver.onSwipe(SwipeDirection.Left);
+				handled = true;
+			}
+			else if (Input.GetKeyDown(KeyCode.RightArrow))
+			{
+				gestureReceiver.onSwipe(SwipeDirection.Right);
 				handled = true;
 			}
 			return handled;

@@ -4,6 +4,16 @@ using System.Collections;
 
 public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 {
+	public float dashCoolDownTime = 2.0f; // Dash cooldown in seconds
+	private float dashCoolDown = 0.0f;
+	public float dashForce = 2.0f;
+	public float dashDuration = 2.0f; // Dash duration in seconds
+
+	public float slackCoolDownTime = 2.0f; // Slack cooldown time in seconds
+	private float slackCoolDown = 0.0f;
+	public float slackForce = 2.0f;
+	public float slackDuration = 2.0f; // Slack duration in seconds
+
 	public float runForce = 4f;				// The fastest the player can travel in the x axis.
 	public float jumpForce = 40f;			// Amount of force added when the player jumps.	
 	
@@ -13,12 +23,10 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	float groundedRadius = .2f;							// Radius of the overlap circle to determine if grounded
 	bool grounded = false;								// Whether or not the player is grounded.
 	Transform ceilingCheck;								// A position marking where to check for ceilings
-	//float ceilingRadius = .01f;							// Radius of the overlap circle to determine if the player can stand up
+	//float ceilingRadius = .01f;						// Radius of the overlap circle to determine if the player can stand up
 	Animator anim;										// Reference to the player's animator component.
 
 	public float gravityAcceleration = -9.8f; // m/s^2
-
-	public bool jump = false;									// To determine when the player presses jump
 
 	public float rotationTime = .5f; // seconds
 
@@ -61,12 +69,23 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 		anim.SetFloat("Speed", Vector3.Magnitude(transform.right));
 
+		Vector2 right = new Vector2(transform.right.x, transform.right.y);
+		right.Normalize();
+
 		// Add running force if grounded
 		if (grounded)
 		{
-			Vector2 right = new Vector2(transform.right.x, transform.right.y);
-			right.Normalize();
 			rigidbody2D.AddForce(right * runForce);
+		}
+
+		if (slackCoolDown > 0.0f)
+		{
+			slackCoolDown -= Time.deltaTime;
+		}
+
+		if (dashCoolDown > 0.0f)
+		{
+			dashCoolDown -= Time.deltaTime;
 		}
 
 		// Add gravity
@@ -74,18 +93,11 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		up.Normalize();
 		Vector2 gravityForce = rigidbody2D.mass * gravityAcceleration * up;
 		rigidbody2D.AddForce(gravityForce);
-	
-        // Jump if we're on the ground and jump pressed
-        if (grounded && jump) {
-            anim.SetBool("Ground", false);
-			rigidbody2D.AddForce(up * jumpForce);
-			jump = false;
-        }
 	}
 
 	public void onTap()
 	{
-		jump = true;
+		tryJump();
 	}
 
 	public void onSwipe(SwipeDirection direction)
@@ -95,18 +107,45 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 		switch (direction)
 		{
-			case SwipeDirection.Up:
-				beginRotation(RotationDirection.Clockwise);
-				break;
-			case SwipeDirection.Down:
-				beginRotation(RotationDirection.Anticlockwise);
-				break;
-			case SwipeDirection.Left:
-				// TODO
-				break;
-			case SwipeDirection.Right:
-				// TODO
-				break;
+		case SwipeDirection.Up:
+			beginRotation(RotationDirection.Clockwise);
+			break;
+		case SwipeDirection.Down:
+			beginRotation(RotationDirection.Anticlockwise);
+			break;
+		case SwipeDirection.Left:
+			trySlack();
+			break;
+		case SwipeDirection.Right:
+			tryDash();
+			break;
+		}
+	}
+
+	private void tryJump()
+	{
+		if (grounded)
+		{
+			anim.SetBool("Ground", false);
+			rigidbody2D.AddForce(transform.up * jumpForce);
+		}
+	}
+
+	private void trySlack()
+	{
+		if (grounded && slackCoolDown <= 0.0f)
+		{
+			slackCoolDown = slackCoolDownTime;
+			StartCoroutine(slackAnimation());
+		}
+	}
+
+	private void tryDash()
+	{
+		if (grounded && dashCoolDown <= 0.0f)
+		{
+			dashCoolDown = dashCoolDownTime;
+			StartCoroutine(dashAnimation());
 		}
 	}
 
@@ -139,6 +178,28 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 		// Restore pre-rotation speed
 		rigidbody2D.velocity = transform.right * preRotationVelocity * postRotationBoostFraction;
+	}
+
+	IEnumerator dashAnimation()
+	{
+		//Debug.Log ("Dashing!");
+		for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / dashDuration)
+		{
+			float magnitude = Mathf.Lerp(dashForce, 0.0f, i);
+			rigidbody2D.AddForce(transform.right * magnitude);
+			yield return new WaitForFixedUpdate();
+		}
+	}
+
+	IEnumerator slackAnimation()
+	{
+		//Debug.Log ("Slacking off...");
+		for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / slackDuration)
+		{
+			float magnitude = Mathf.Lerp(slackForce, 0.0f, i);
+			rigidbody2D.AddForce(-transform.right * magnitude);
+			yield return new WaitForFixedUpdate();
+		}
 	}
 
 }

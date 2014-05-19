@@ -42,6 +42,6 @@ public class Camera2DFollow : MonoBehaviour {
 		
 		lastTargetPosition = target.position;	
 
-		transform.up = target.up;
+		transform.up = Vector3.Normalize(target.up);
 	}
 }
