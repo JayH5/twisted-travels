@@ -40,6 +40,8 @@ public class Camera2DFollow : MonoBehaviour {
 		
 		transform.position = newPos;
 		
-		lastTargetPosition = target.position;		
+		lastTargetPosition = target.position;	
+
+		transform.up = target.up;
 	}
 }

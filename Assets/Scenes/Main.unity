@@ -88,6 +88,7 @@ GameObject:
   - 50: {fileID: 78646905}
   - 114: {fileID: 78646904}
   - 61: {fileID: 78646902}
+  - 114: {fileID: 78646903}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -120,6 +121,19 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: .25, y: .680000007}
   m_Center: {x: 0, y: 0}
+--- !u!114 &78646903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 78646900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e8a5248462fa4d3eb37ee09e7837be3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minMovement: 20
+  enableKeyboardDebug: 1
 --- !u!114 &78646904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,10 +155,15 @@ MonoBehaviour:
   gravityX: 0
   speedX: 1
   speedY: 0
+  gravityAcceleration: -9.80000019
   jump: 0
   targetUp: {x: 0, y: 1, z: 0}
   damping: 10
-  swipeHandler: {fileID: 599374075}
+  rotationSpeed: 2
+  maxAngularSpeed: 5
+  targetRotation: {x: 0, y: 0, z: 0, w: 0}
+  rotationTorque: 50
+  rotationStepSize: 5
 --- !u!50 &78646905
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -152,11 +171,11 @@ Rigidbody2D:
     type: 2}
   m_PrefabInternal: {fileID: 130453969}
   m_GameObject: {fileID: 78646900}
-  m_Mass: 1
+  m_Mass: 30
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 0
-  m_FixedAngle: 1
+  m_FixedAngle: 0
   m_IsKinematic: 0
   m_Interpolate: 1
   m_SleepingMode: 1
@@ -294,7 +313,7 @@ Prefab:
     - target: {fileID: 11400002, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
       propertyPath: camera
       value: 
-      objectReference: {fileID: 599374075}
+      objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
       propertyPath: targetUp.y
       value: 1
@@ -310,10 +329,26 @@ Prefab:
     - target: {fileID: 11400002, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
       propertyPath: swipeHandler
       value: 
-      objectReference: {fileID: 599374075}
+      objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
+      propertyPath: handler
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000000, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000000, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
+      propertyPath: m_FixedAngle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000000, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
+      propertyPath: m_Mass
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11400000, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
@@ -457,7 +492,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4accb8852c77764fb878d1a0e6b75da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 599374075}
   player: {fileID: 78646904}
   moveSpeed: .949999988
 --- !u!1001 &334857058
@@ -730,18 +764,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 599374069}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13ad45436d8af2c4b8712bf847a2cd11, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d8238cc53530b64fbb7828c3d3bb591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minMovement: 15
-  sendUpMessage: 1
-  sendDownMessage: 1
-  sendLeftMessage: 1
-  sendRightMessage: 1
-  MessageTarget: {fileID: 0}
-  rotationStep: 5
-  currentRotation: {x: 0, y: 0, z: 0}
-  player: {fileID: 78646904}
+  target: {fileID: 78646901}
+  damping: 1
+  lookAheadFactor: 3
+  lookAheadReturnSpeed: .5
+  lookAheadMoveThreshold: .100000001
 --- !u!1001 &694414037
 Prefab:
   m_ObjectHideFlags: 0

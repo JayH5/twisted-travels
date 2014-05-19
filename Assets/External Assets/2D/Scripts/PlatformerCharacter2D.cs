@@ -1,16 +1,12 @@
 ﻿using UnityEngine;
+using Gestures;
+using System.Collections;
 
-public class PlatformerCharacter2D : MonoBehaviour 
+public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 {
-	//bool facingRight = true;							// For determining which way the player is currently facing.
-
-	[SerializeField] float maxSpeed = 10f;				// The fastest the player can travel in the x axis.
-	[SerializeField] float jumpForce = 400f;			// Amount of force added when the player jumps.	
-
-	[Range(0, 1)]
-	//[SerializeField] float crouchSpeed = .36f;			// Amount of maxSpeed applied to crouching movement. 1 = 100%
+	public float runForce = 4f;				// The fastest the player can travel in the x axis.
+	public float jumpForce = 40f;			// Amount of force added when the player jumps.	
 	
-	//[SerializeField] bool airControl = false;			// Whether or not a player can steer while jumping;
 	[SerializeField] LayerMask whatIsGround;			// A mask determining what is ground to the character
 	
 	Transform groundCheck;								// A position marking where to check if the player is grounded.
@@ -20,19 +16,27 @@ public class PlatformerCharacter2D : MonoBehaviour
 	//float ceilingRadius = .01f;							// Radius of the overlap circle to determine if the player can stand up
 	Animator anim;										// Reference to the player's animator component.
 
-	//My added stuff
-	public float gravityY = -25f;
-	public float gravityX = 0.0f;
-	public float speedX = 1; 
-	public float speedY = 0;
+	public float gravityAcceleration = -9.8f; // m/s^2
 
 	public bool jump = false;									// To determine when the player presses jump
 
-	public Vector3 targetUp = new Vector3(0, 1, 0);
-	public float damping = 10;
+	public float rotationTime = .5f; // seconds
 
-	public SwipeHandler swipeHandler;
+	private int currentRotation = 0;
+	private int targetRotation = 0;
 
+	private enum RotationDirection
+	{
+		Anticlockwise = 90, Clockwise = -90, None = 0
+	}
+	private RotationDirection currentRotationDirection = RotationDirection.None;
+
+	// We cheat physics by preserving the player's velocity after rotating gravity
+	private float preRotationVelocity;
+	// If we restore all the velocity then things are too quick... tone it down a bit
+	public float postRotationBoostFraction = 0.7f;
+
+	private GestureHandler handler;
 
     void Awake()
 	{
@@ -40,6 +44,8 @@ public class PlatformerCharacter2D : MonoBehaviour
 		groundCheck = transform.Find("GroundCheck");
 		ceilingCheck = transform.Find("CeilingCheck");
 		anim = GetComponent<Animator>();
+		handler = GetComponent<GestureHandler>();
+		handler.setSwipeReceiver(this);
 	}
 
 
@@ -50,58 +56,89 @@ public class PlatformerCharacter2D : MonoBehaviour
 		anim.SetBool("Ground", grounded);
 
 		// Set the vertical animation
+		// TODO: calculate vertical speed properly
 		anim.SetFloat("vSpeed", rigidbody2D.velocity.y);
 
-		//slep the charactor to face the direcion required
-		transform.up = Vector3.Slerp(transform.up, targetUp, Time.deltaTime * damping);
+		anim.SetFloat("Speed", Vector3.Magnitude(transform.right));
 
-		//move!
-		// The Speed animator parameter is set to the absolute value of the horizontal input.
-		if (speedX > 0)
-			anim.SetFloat("Speed", Mathf.Abs(speedX));
-		else if (speedY > 0)
-			anim.SetFloat("Speed", Mathf.Abs(speedY));
-		
-		// Move the character depending on  rotation
-		if (swipeHandler.currentRotation.z > 89 && swipeHandler.currentRotation.z < 91)
+		// Add running force if grounded
+		if (grounded)
 		{
-			rigidbody2D.velocity = new Vector2((speedX * maxSpeed) + rigidbody2D.velocity.x + (gravityX * Time.deltaTime), (speedY * maxSpeed) + (gravityY * Time.deltaTime));
+			Vector2 right = new Vector2(transform.right.x, transform.right.y);
+			right.Normalize();
+			rigidbody2D.AddForce(right * runForce);
 		}
-		else if (swipeHandler.currentRotation.z > 179 && swipeHandler.currentRotation.z < 181)
-		{
-			rigidbody2D.velocity = new Vector2((speedX * maxSpeed) + (gravityX * Time.deltaTime), (speedY * maxSpeed) + rigidbody2D.velocity.y + (gravityY * Time.deltaTime));
-		}
-		else if (swipeHandler.currentRotation.z > 269 && swipeHandler.currentRotation.z < 271)
-		{
-			rigidbody2D.velocity = new Vector2((speedX * maxSpeed) + rigidbody2D.velocity.x + (gravityX * Time.deltaTime), (speedY * maxSpeed) + (gravityY * Time.deltaTime));
-		}
-		else if (swipeHandler.currentRotation.z > -1 && swipeHandler.currentRotation.z < 1)
-		{
-			rigidbody2D.velocity = new Vector2((speedX * maxSpeed)+ (gravityX * Time.deltaTime), (speedY * maxSpeed) + rigidbody2D.velocity.y + (gravityY * Time.deltaTime));
-		}
+
+		// Add gravity
+		Vector2 up = new Vector2(transform.up.x, transform.up.y);
+		up.Normalize();
+		Vector2 gravityForce = rigidbody2D.mass * gravityAcceleration * up;
+		rigidbody2D.AddForce(gravityForce);
 	
-        //determine the direction of the jump based on gravity
+        // Jump if we're on the ground and jump pressed
         if (grounded && jump) {
             anim.SetBool("Ground", false);
-			if (swipeHandler.currentRotation.z > 89 && swipeHandler.currentRotation.z < 91)
-			{
-				rigidbody2D.AddForce(new Vector2(-jumpForce, 0));
-			}
-			else if (swipeHandler.currentRotation.z > 179 && swipeHandler.currentRotation.z < 181)
-			{
-				rigidbody2D.AddForce(new Vector2(0, -jumpForce));
-			}
-			else if (swipeHandler.currentRotation.z > 269 && swipeHandler.currentRotation.z < 271)
-			{
-				rigidbody2D.AddForce(new Vector2(jumpForce, 0));
-			}
-			else if (swipeHandler.currentRotation.z > -1 && swipeHandler.currentRotation.z < 1)
-			{
-				rigidbody2D.AddForce(new Vector2(0, jumpForce));
-			}
-        }
-
-		if (grounded)
+			rigidbody2D.AddForce(up * jumpForce);
 			jump = false;
-	}	
+        }
+	}
+
+	public void onTap()
+	{
+		jump = true;
+	}
+
+	public void onSwipe(SwipeDirection direction)
+	{
+		//if (!grounded) // No rotating in the air
+		//	return;
+
+		switch (direction)
+		{
+			case SwipeDirection.Up:
+				beginRotation(RotationDirection.Clockwise);
+				break;
+			case SwipeDirection.Down:
+				beginRotation(RotationDirection.Anticlockwise);
+				break;
+			case SwipeDirection.Left:
+				// TODO
+				break;
+			case SwipeDirection.Right:
+				// TODO
+				break;
+		}
+	}
+
+	private void beginRotation(RotationDirection direction)
+	{
+		if (currentRotationDirection != RotationDirection.None)
+			return; // If not finished rotating, ignore new requests
+
+		targetRotation = currentRotation + (int) direction;
+		currentRotationDirection = direction;
+
+		Quaternion from = Quaternion.AngleAxis(currentRotation, Vector3.forward);
+		Quaternion to = Quaternion.AngleAxis(targetRotation, Vector3.forward);
+
+		// Need to "restore" speed after rotation. Store it here.
+		preRotationVelocity = Mathf.Sqrt(Vector2.SqrMagnitude(rigidbody2D.velocity));
+
+		StartCoroutine (rotationAnimation(from, to));
+	}
+
+	IEnumerator rotationAnimation(Quaternion from, Quaternion to)
+	{
+		for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / rotationTime)
+		{
+			transform.rotation = Quaternion.Slerp(from, to, i);
+			yield return new WaitForSeconds(0);
+		}
+		currentRotation = targetRotation;
+		currentRotationDirection = RotationDirection.None;
+
+		// Restore pre-rotation speed
+		rigidbody2D.velocity = transform.right * preRotationVelocity * postRotationBoostFraction;
+	}
+
 }

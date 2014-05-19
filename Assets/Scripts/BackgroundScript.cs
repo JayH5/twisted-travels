@@ -8,7 +8,7 @@ public class BackgroundScript : MonoBehaviour {
 	bool offset1, offset2, offset3, offset4 = false; //limits the update to only get the offset value once per rotation
 	float offsetX, offsetY; //offset from the centre of the image to the player/camera position 
 	
-	public SwipeHandler camera;
+	//public SwipeHandler camera;
 	public PlatformerCharacter2D player;
 	public float moveSpeed = 0.9f;
 
@@ -20,7 +20,8 @@ public class BackgroundScript : MonoBehaviour {
 	void Update () {
 
 		//temp - need to fix this properly later
-		transform.position = new Vector3(camera.transform.position.x, camera.transform.position.y, transform.position.z); 
+		Vector3 camera = player.transform.position;
+		transform.position = new Vector3(camera.x, camera.y, transform.position.z); 
 		
 		/*if camera.transform.position.x (camera.currentRotation.z > 89 && camera.currentRotation.z < 91) //1
 		{
