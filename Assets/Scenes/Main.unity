@@ -784,15 +784,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 599374069}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d8238cc53530b64fbb7828c3d3bb591, type: 3}
+  m_Script: {fileID: 11500000, guid: a888a0d72552849a4a3039ca4cca03fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 78646901}
-  positionDamping: 1
-  lookAheadFactor: 5
-  lookAheadReturnSpeed: .5
-  lookAheadMoveThreshold: .100000001
-  rotationDamping: .100000001
 --- !u!1001 &694414037
 Prefab:
   m_ObjectHideFlags: 0

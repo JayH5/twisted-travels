@@ -176,6 +176,8 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		currentRotation = targetRotation;
 		currentRotationDirection = RotationDirection.None;
 
+		transform.rotation = to;
+
 		// Restore pre-rotation speed
 		rigidbody2D.velocity = transform.right * preRotationVelocity * postRotationBoostFraction;
 	}

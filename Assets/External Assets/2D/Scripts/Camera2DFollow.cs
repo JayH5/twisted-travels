@@ -37,7 +37,7 @@ public class Camera2DFollow : MonoBehaviour {
 
 		if (updateLookAheadTarget)
 		{
-			lookAheadPos = lookAheadFactor * Vector3.right * Mathf.Sign(moveDelta);
+			lookAheadPos = lookAheadFactor * transform.right.normalized;
 		}
 		else
 		{
