@@ -10,9 +10,6 @@ public class Camera2DFollow : MonoBehaviour {
 	public float lookAheadMoveThreshold = 0.1f;
 
 	public float rotationDamping = 0.5f;
-	public float turnAheadFactor = 3;
-	public float turnAheadReturnSpeed = 10.0f;
-	public float turnAheadMoveThreshold = 0.1f;
 	
 	float offsetZ;
 
@@ -20,9 +17,7 @@ public class Camera2DFollow : MonoBehaviour {
 	Vector3 currentVelocity;
 	Vector3 lookAheadPos;
 
-	Vector3 lastTargetUp;
 	Vector3 currentAngularVelocity;
-	Vector3 turnAheadUp;
 	
 	// Use this for initialization
 	void Start () {
@@ -54,30 +49,9 @@ public class Camera2DFollow : MonoBehaviour {
 		
 		transform.position = newPos;
 		
-		lastTargetPosition = target.position;	
-
+		lastTargetPosition = target.position;
 
 		// Now do the same for rotation...
-		float rotDelta = Vector3.Angle(target.up, lastTargetUp);
-
-		bool updateTurnAheadTarget = Mathf.Abs(rotDelta) > turnAheadMoveThreshold;
-
-		if (updateTurnAheadTarget)
-		{
-			turnAheadUp = turnAheadFactor * Vector3.up * Mathf.Sign(rotDelta);
-		}
-		else
-		{
-			turnAheadUp = Vector3.MoveTowards(turnAheadUp, Vector3.zero, Time.deltaTime * turnAheadReturnSpeed);
-		}
-
-		Vector3 aheadTargetUp = target.up + turnAheadUp;
-		//Debug.Log ("Target up: " + target.up);
-		//Debug.Log ("aheadTargetUp: " + aheadTargetUp);
-		Vector3 newRot = Vector3.SmoothDamp(transform.up, aheadTargetUp, ref currentAngularVelocity, rotationDamping);
-
-		transform.up = newRot;
-
-		lastTargetUp = target.up;
+		transform.up = Vector3.SmoothDamp(transform.up, target.up, ref currentAngularVelocity, rotationDamping);
 	}
 }
