@@ -16,7 +16,11 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	public float runForce = 4f;				// The fastest the player can travel in the x axis.
 	public float jumpForce = 40f;			// Amount of force added when the player jumps.	
-	
+
+	public AudioClip jumpSound;
+	public AudioClip dashSound;
+	public AudioClip rotateSound;
+
 	[SerializeField] LayerMask whatIsGround;			// A mask determining what is ground to the character
 	
 	Transform groundCheck;								// A position marking where to check if the player is grounded.
@@ -126,6 +130,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	{
 		if (grounded)
 		{
+			AudioSource.PlayClipAtPoint(jumpSound, new Vector3(0,0,0));
 			anim.SetBool("Ground", false);
 			rigidbody2D.AddForce(transform.up * jumpForce);
 		}
@@ -144,6 +149,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	{
 		if (grounded && dashCoolDown <= 0.0f)
 		{
+			AudioSource.PlayClipAtPoint(dashSound, new Vector3(0,0,0));
 			dashCoolDown = dashCoolDownTime;
 			StartCoroutine(dashAnimation());
 		}
@@ -153,6 +159,8 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	{
 		if (currentRotationDirection != RotationDirection.None)
 			return; // If not finished rotating, ignore new requests
+
+		AudioSource.PlayClipAtPoint(rotateSound, new Vector3());
 
 		targetRotation = currentRotation + (int) direction;
 		currentRotationDirection = direction;
