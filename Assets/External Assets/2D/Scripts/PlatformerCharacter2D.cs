@@ -21,14 +21,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	public AudioClip dashSound;
 	public AudioClip rotateSound;
 
-	[SerializeField] LayerMask whatIsGround;			// A mask determining what is ground to the character
-	
-	Transform groundCheck;								// A position marking where to check if the player is grounded.
-	float groundedRadius = .2f;							// Radius of the overlap circle to determine if grounded
-	bool grounded = false;								// Whether or not the player is grounded.
-	Transform ceilingCheck;								// A position marking where to check for ceilings
-	//float ceilingRadius = .01f;						// Radius of the overlap circle to determine if the player can stand up
-	Animator anim;										// Reference to the player's animator component.
+	Animator anim;										// Reference to the player's animator component.	
 
 	public float gravityAcceleration = -9.8f; // m/s^2
 
@@ -48,28 +41,36 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	// If we restore all the velocity then things are too quick... tone it down a bit
 	public float postRotationBoostFraction = 0.7f;
 
-	private GestureHandler handler;
+	/// <summary>
+	/// Gets or sets a value indicating whether the player is grounded.
+	/// </summary>
+	/// <value><c>true</c> if this instance is grounded; otherwise, <c>false</c>.</value>
+	public bool IsGrounded
+	{
+		get { return isGrounded; }
+		set
+		{
+			isGrounded = value;
+			anim.SetBool("Ground", value);
+		}
+	}
+	bool isGrounded = false; // Start off the ground
 
     void Awake()
 	{
-		// Setting up references.
-		groundCheck = transform.Find("GroundCheck");
-		ceilingCheck = transform.Find("CeilingCheck");
 		anim = GetComponent<Animator>();
-		handler = GetComponent<GestureHandler>();
+		anim.SetBool("Ground", IsGrounded);
+
+		// I don't know how to do the listener pattern in Unity so this is haxx
+		GestureHandler handler = GetComponent<GestureHandler>();
 		handler.setSwipeReceiver(this);
 	}
 
-
 	void FixedUpdate()
 	{
-		// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
-		grounded = Physics2D.OverlapCircle(groundCheck.position, groundedRadius, whatIsGround);
-		anim.SetBool("Ground", grounded);
-
 		// Set the vertical animation
-		// TODO: calculate vertical speed properly
-		anim.SetFloat("vSpeed", rigidbody2D.velocity.y);
+		float vSpeed = Vector3.Dot(rigidbody2D.velocity, transform.up);
+		anim.SetFloat("vSpeed", vSpeed);
 
 		anim.SetFloat("Speed", Vector3.Magnitude(transform.right));
 
@@ -77,7 +78,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		right.Normalize();
 
 		// Add running force if grounded
-		if (grounded)
+		if (IsGrounded)
 		{
 			rigidbody2D.AddForce(right * runForce);
 		}
@@ -112,10 +113,10 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		switch (direction)
 		{
 		case SwipeDirection.Up:
-			beginRotation(RotationDirection.Clockwise);
+			tryRotate(RotationDirection.Clockwise);
 			break;
 		case SwipeDirection.Down:
-			beginRotation(RotationDirection.Anticlockwise);
+			tryRotate(RotationDirection.Anticlockwise);
 			break;
 		case SwipeDirection.Left:
 			trySlack();
@@ -126,11 +127,25 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		}
 	}
 
+	private void tryRotate(RotationDirection direction)
+	{
+		if (canRotate(direction))
+		{
+			Debug.Log("Can rotate, beginning...");
+			beginRotation(direction);
+		}
+		else
+		{
+			Debug.Log("Cannot rotate :(");
+			// TODO: Provide some hint that player shouldn't have tried to rotate
+		}
+	}
+
 	private void tryJump()
 	{
-		if (grounded)
+		if (IsGrounded)
 		{
-			AudioSource.PlayClipAtPoint(jumpSound, new Vector3(0,0,0));
+			AudioSource.PlayClipAtPoint(jumpSound, Vector3.zero);
 			anim.SetBool("Ground", false);
 			rigidbody2D.AddForce(transform.up * jumpForce);
 		}
@@ -138,7 +153,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	private void trySlack()
 	{
-		if (grounded && slackCoolDown <= 0.0f)
+		if (IsGrounded && slackCoolDown <= 0.0f)
 		{
 			slackCoolDown = slackCoolDownTime;
 			StartCoroutine(slackAnimation());
@@ -147,9 +162,9 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	private void tryDash()
 	{
-		if (grounded && dashCoolDown <= 0.0f)
+		if (IsGrounded && dashCoolDown <= 0.0f)
 		{
-			AudioSource.PlayClipAtPoint(dashSound, new Vector3(0,0,0));
+			AudioSource.PlayClipAtPoint(dashSound, Vector3.zero);
 			dashCoolDown = dashCoolDownTime;
 			StartCoroutine(dashAnimation());
 		}
@@ -157,10 +172,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	private void beginRotation(RotationDirection direction)
 	{
-		if (currentRotationDirection != RotationDirection.None)
-			return; // If not finished rotating, ignore new requests
-
-		AudioSource.PlayClipAtPoint(rotateSound, new Vector3());
+		AudioSource.PlayClipAtPoint(rotateSound, Vector3.zero);
 
 		targetRotation = currentRotation + (int) direction;
 		currentRotationDirection = direction;
@@ -174,6 +186,42 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		StartCoroutine (rotationAnimation(from, to));
 	}
 
+	private bool canRotate(RotationDirection direction)
+	{
+		if (currentRotationDirection != RotationDirection.None)
+			return false; // If not finished rotating, ignore new requests
+
+		// TODO: Detect walls and cliffs
+		return true;
+	}
+
+	public void OnUpcomingWallDetected()
+	{
+		// TODO: Switch on ability to rotate anticlockwise
+		Debug.Log("Upcoming wall!");
+	}
+
+	public void OnUpcomingCliffDetected()
+	{
+		// TODO: Switch on ability to rotate clockwise
+		Debug.Log("Upcoming cliff!");
+	}
+
+	public void OnWallCollisionDetected()
+	{
+		// TODO: Die
+		Debug.Log("Wall collision detected!");
+	}
+
+	public void OnCliffEdgeDetected()
+	{
+		// TODO: Something?
+		Debug.Log("Cliff edge detected!");
+	}
+
+	//
+	// ANIMATION COROUTINES
+	//
 	IEnumerator rotationAnimation(Quaternion from, Quaternion to)
 	{
 		for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / rotationTime)
