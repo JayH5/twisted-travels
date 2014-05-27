@@ -61,21 +61,23 @@ public class PlatformerCharacter2D : MonoBehaviour
 			anim.SetFloat("Speed", Mathf.Abs(speedX));
 		else if (speedY > 0)
 			anim.SetFloat("Speed", Mathf.Abs(speedY));
-		
+				
 		// Move the character depending on  rotation
-		if (swipeHandler.currentRotation.z > 89 && swipeHandler.currentRotation.z < 91)
+		int swipeRotation = Mathf.RoundToInt(swipeHandler.currentRotation.z);
+
+		if (swipeRotation == 90)
 		{
 			rigidbody2D.velocity = new Vector2((speedX * maxSpeed) + rigidbody2D.velocity.x + (gravityX * Time.deltaTime), (speedY * maxSpeed) + (gravityY * Time.deltaTime));
 		}
-		else if (swipeHandler.currentRotation.z > 179 && swipeHandler.currentRotation.z < 181)
+		else if (swipeRotation == 180)
 		{
 			rigidbody2D.velocity = new Vector2((speedX * maxSpeed) + (gravityX * Time.deltaTime), (speedY * maxSpeed) + rigidbody2D.velocity.y + (gravityY * Time.deltaTime));
 		}
-		else if (swipeHandler.currentRotation.z > 269 && swipeHandler.currentRotation.z < 271)
+		else if (swipeRotation == 270)
 		{
 			rigidbody2D.velocity = new Vector2((speedX * maxSpeed) + rigidbody2D.velocity.x + (gravityX * Time.deltaTime), (speedY * maxSpeed) + (gravityY * Time.deltaTime));
 		}
-		else if (swipeHandler.currentRotation.z > -1 && swipeHandler.currentRotation.z < 1)
+		else if (swipeRotation == 0)
 		{
 			rigidbody2D.velocity = new Vector2((speedX * maxSpeed)+ (gravityX * Time.deltaTime), (speedY * maxSpeed) + rigidbody2D.velocity.y + (gravityY * Time.deltaTime));
 		}
@@ -83,19 +85,19 @@ public class PlatformerCharacter2D : MonoBehaviour
         //determine the direction of the jump based on gravity
         if (grounded && jump) {
             anim.SetBool("Ground", false);
-			if (swipeHandler.currentRotation.z > 89 && swipeHandler.currentRotation.z < 91)
+			if (swipeRotation == 90)
 			{
 				rigidbody2D.AddForce(new Vector2(-jumpForce, 0));
 			}
-			else if (swipeHandler.currentRotation.z > 179 && swipeHandler.currentRotation.z < 181)
+			else if (swipeRotation == 180)
 			{
 				rigidbody2D.AddForce(new Vector2(0, -jumpForce));
 			}
-			else if (swipeHandler.currentRotation.z > 269 && swipeHandler.currentRotation.z < 271)
+			else if (swipeRotation == 270)
 			{
 				rigidbody2D.AddForce(new Vector2(jumpForce, 0));
 			}
-			else if (swipeHandler.currentRotation.z > -1 && swipeHandler.currentRotation.z < 1)
+			else if (swipeRotation == 0)
 			{
 				rigidbody2D.AddForce(new Vector2(0, jumpForce));
 			}
