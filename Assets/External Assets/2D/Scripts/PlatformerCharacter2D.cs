@@ -36,6 +36,11 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	}
 	private RotationDirection currentRotationDirection = RotationDirection.None;
 
+	/// <summary>
+	/// This variable keeps track of the next *correct* rotation as we detect walls and cliffs ahead of the character.
+	/// </summary>
+	private RotationDirection nextRotationDirection = RotationDirection.None;
+
 	// We cheat physics by preserving the player's velocity after rotating gravity
 	private float preRotationVelocity;
 	// If we restore all the velocity then things are too quick... tone it down a bit
@@ -191,32 +196,41 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		if (currentRotationDirection != RotationDirection.None)
 			return false; // If not finished rotating, ignore new requests
 
-		// TODO: Detect walls and cliffs
-		return true;
+		return direction == nextRotationDirection;
 	}
 
 	public void OnUpcomingWallDetected()
 	{
-		// TODO: Switch on ability to rotate anticlockwise
-		Debug.Log("Upcoming wall!");
+		if (nextRotationDirection == RotationDirection.None)
+		{
+			Debug.Log("Upcoming wall!");
+			nextRotationDirection = RotationDirection.Anticlockwise;
+		}
 	}
 
 	public void OnUpcomingCliffDetected()
 	{
-		// TODO: Switch on ability to rotate clockwise
-		Debug.Log("Upcoming cliff!");
+		if (nextRotationDirection == RotationDirection.None)
+		{
+			Debug.Log("Upcoming cliff!");
+			nextRotationDirection = RotationDirection.Clockwise;
+		}
 	}
 
 	public void OnWallCollisionDetected()
 	{
 		// TODO: Die
-		Debug.Log("Wall collision detected!");
+		//Debug.Log("Wall collision detected!");
+		//if (currentRotationDirection == RotationDirection.None)
+			//nextRotationDirection = RotationDirection.Anticlockwise; // Save people stuck against walls for now
 	}
 
 	public void OnCliffEdgeDetected()
 	{
 		// TODO: Something?
-		Debug.Log("Cliff edge detected!");
+		//Debug.Log("Cliff edge detected!");
+		//if (currentRotationDirection == RotationDirection.None)
+			//nextRotationDirection = RotationDirection.Clockwise; // Save people in free fall for now
 	}
 
 	//
@@ -231,6 +245,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		}
 		currentRotation = targetRotation;
 		currentRotationDirection = RotationDirection.None;
+		nextRotationDirection = RotationDirection.None;
 
 		transform.rotation = to;
 

@@ -9,7 +9,8 @@ namespace Triggers {
 		
 		void OnTriggerEnter2D(Collider2D other)
 		{
-			character.OnWallCollisionDetected();
+			if (other.name == "Floor")
+				character.OnWallCollisionDetected();
 		}
 		
 		void OnTriggerExit2D(Collider2D other)
