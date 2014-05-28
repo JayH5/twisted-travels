@@ -33,11 +33,13 @@ public class SpawnVertScript : MonoBehaviour {
 				UpDown = 10.6f;
 			else if ( platforms[index].name[0] == 'L')
 				UpDown = 16.02f;
+
+			ProcGenCounter.last2[1] = "up";
 			
 			//instantiate the platform
 			Instantiate (platforms[index], new Vector3(transform.position.x, transform.position.y + UpDown, transform.position.z) , Quaternion.AngleAxis(90,new Vector3(0,0,1)));
 
-			ProcGenCounter.last2[1] = "up";
+
 
 			if (ProcGenCounter.last2[0] == "left")
 			{
@@ -62,11 +64,13 @@ public class SpawnVertScript : MonoBehaviour {
 				UpDown = -10.6f;
 			else if ( platforms[index].name[0] == 'L')
 				UpDown = -16.02f;
+
+			ProcGenCounter.last2[1] = "down";
 			
 			//instantiate the platform
 			Instantiate (platforms[index], new Vector3(transform.position.x, transform.position.y + UpDown, transform.position.z) , Quaternion.AngleAxis(270,new Vector3(0,0,1)));
 
-			ProcGenCounter.last2[1] = "down";
+
 
 			if (ProcGenCounter.last2[0] == "left")
 			{
@@ -98,11 +102,13 @@ public class SpawnVertScript : MonoBehaviour {
 					UpDown = 10.6f;
 				else if ( platforms[index].name[0] == 'L')
 					UpDown = 16.02f;
+
+				ProcGenCounter.last2[1] = "up";
 								
 				//instantiate the platform
 				Instantiate (platforms[index], new Vector3(transform.position.x, transform.position.y + UpDown, transform.position.z) , Quaternion.AngleAxis(90,new Vector3(0,0,1)));	
 
-				ProcGenCounter.last2[1] = "up";
+
 			}
 			else //down
 			{
@@ -114,11 +120,13 @@ public class SpawnVertScript : MonoBehaviour {
 					UpDown = -10.6f;
 				else if ( platforms[index].name[0] == 'L')
 					UpDown = -16.02f;
+
+				ProcGenCounter.last2[1] = "down";
 				
 				//instantiate the platform
 				Instantiate (platforms[index], new Vector3(transform.position.x, transform.position.y + UpDown, transform.position.z) , Quaternion.AngleAxis(270,new Vector3(0,0,1)));
 
-				ProcGenCounter.last2[1] = "down";
+
 			}
 		}
 	}

@@ -141,7 +141,8 @@ MonoBehaviour:
   - {fileID: 100002, guid: f862810398f97214d838eb9456f8e591, type: 2}
   - {fileID: 100002, guid: 308c487b0349e044ea9da92920747e84, type: 2}
   - {fileID: 100002, guid: 8e1397f7efaa850439734ab41d689fa3, type: 2}
-  spawnRate: 2
+  - {fileID: 100004, guid: 51255e644fc025e4e99858c20bb997cd, type: 2}
+  spawnRate: 1
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -153,6 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07eb678b2324f924c807874b2430f9e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  upDown: -1
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

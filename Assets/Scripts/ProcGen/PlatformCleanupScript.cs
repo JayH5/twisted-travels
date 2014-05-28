@@ -5,6 +5,7 @@ public class PlatformCleanupScript: MonoBehaviour {
 
 	private float timer;
 	private bool playerTouch = false;
+	public int upDown = -1; //up is 1, down is 0;
 
 	void Start()
 	{
@@ -16,7 +17,14 @@ public class PlatformCleanupScript: MonoBehaviour {
 				child.rigidbody2D.gravityScale = 8;
 		}*/
 
-		print (transform.rotation.z);
+		if (ProcGenCounter.last2[1] == "up")
+		{
+			upDown = 1;
+		}
+		else if (ProcGenCounter.last2[1] == "down")
+		{
+			upDown = 0;
+		}
 	}
 
 	void Update ()

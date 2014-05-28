@@ -14,7 +14,7 @@ namespace Triggers {
 				{
 					if (transform.parent.gameObject.transform.rotation.z > 0.9) //180 degrees
 						child.rigidbody2D.gravityScale = -8;
-					else 
+					else //0 degrees
 						child.rigidbody2D.gravityScale = 8;
 				}
 			}
