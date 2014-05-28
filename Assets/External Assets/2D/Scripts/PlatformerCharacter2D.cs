@@ -80,6 +80,12 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	Vector3 lastWallRayHit;
 
 	public BasicTrackingCamera camera;
+	
+
+	float distance = 0f;
+	Vector3 previousPosition;
+	float nextDistanceUpdate = 0f; // For debug
+	float distanceBetweenUpdates = 10f;
 
     void Awake()
 	{
@@ -124,6 +130,10 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		up.Normalize();
 		Vector2 gravityForce = rigidbody2D.mass * gravityAcceleration * up;
 		rigidbody2D.AddForce(gravityForce);
+
+		// Update the distance tracking - slightly hax distance calculation but should be fine
+		distance += Vector3.Dot(transform.position - previousPosition, transform.right);
+		previousPosition = transform.position;
 	}
 
 	void Update()
@@ -133,6 +143,12 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 			Debug.DrawLine(lastWallRayOrigin, lastWallRayHit);
 			Debug.DrawLine(lastGroundRayOrigin, lastGroundRayHit);
 			Debug.DrawLine(lastGroundRayHit, lastCliffCheck);
+
+			if (distance >= nextDistanceUpdate)
+			{
+				Debug.Log("Distance run: " + distance);
+				nextDistanceUpdate += distanceBetweenUpdates;
+			}
 		}
 	}
 
