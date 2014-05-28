@@ -17,6 +17,8 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	public float runForce = 4f;				// The fastest the player can travel in the x axis.
 	public float jumpForce = 40f;			// Amount of force added when the player jumps.
 
+	public float maxSpeed = 8f;
+
 	public AudioClip jumpSound;
 	public AudioClip dashSound;
 	public AudioClip rotateSound;
@@ -94,16 +96,17 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	void FixedUpdate()
 	{
 		// Set the vertical animation
-		float vSpeed = Vector3.Dot(rigidbody2D.velocity, transform.up);
-		anim.SetFloat("vSpeed", vSpeed);
+		float vSpeed = Vector2.Dot(rigidbody2D.velocity, transform.up);
+		float speed = Vector2.Dot(rigidbody2D.velocity, transform.right);
 
-		anim.SetFloat("Speed", Vector3.Magnitude(transform.right));
+		anim.SetFloat("vSpeed", vSpeed);
+		anim.SetFloat("Speed", speed);
 
 		Vector2 right = new Vector2(transform.right.x, transform.right.y);
 		right.Normalize();
 
-		// Add running force if grounded
-		if (IsGrounded)
+		// Add running force if grounded and below max speed
+		if (IsGrounded && speed < maxSpeed)
 		{
 			rigidbody2D.AddForce(right * runForce);
 		}

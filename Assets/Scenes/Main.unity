@@ -154,6 +154,7 @@ MonoBehaviour:
   slackDuration: 2
   runForce: 4
   jumpForce: 250
+  maxSpeed: 8
   jumpSound: {fileID: 8300000, guid: b02f8486ece4b42d9a6ab3bd1b7d1fc2, type: 3}
   dashSound: {fileID: 8300000, guid: a7c8f53ec381545a386bf0ea687cd673, type: 3}
   rotateSound: {fileID: 8300000, guid: 79a9b8fa8bb4d4fc3891a2389a61b853, type: 3}
@@ -532,9 +533,9 @@ Transform:
   m_LocalPosition: {x: -9.36094666, y: -3.00332785, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1387889637}
   - {fileID: 1343770215}
   - {fileID: 2029204317}
+  - {fileID: 1387889637}
   m_Father: {fileID: 1544372689}
 --- !u!61 &480625903
 BoxCollider2D:
