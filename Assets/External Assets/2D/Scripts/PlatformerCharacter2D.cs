@@ -36,10 +36,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	}
 	private RotationDirection currentRotationDirection = RotationDirection.None;
 
-	/// <summary>
-	/// This variable keeps track of the next *correct* rotation as we detect walls and cliffs ahead of the character.
-	/// </summary>
-	private RotationDirection nextRotationDirection = RotationDirection.None;
+	private bool upcomingWallDetected = false;
 
 	// We cheat physics by preserving the player's velocity after rotating gravity
 	private float preRotationVelocity;
@@ -60,6 +57,20 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		}
 	}
 	bool isGrounded = false; // Start off the ground
+
+	public LayerMask floorLayerMask;
+	public float cliffCheckDistance = 1.0f;
+	public float cliffCheckDrop = 0.2f;
+	public float cliffCheckRadius = 0.2f;
+	public float groundRayMaxDistance = 3.0f;
+
+	/// <summary>
+	/// Debugging for cliff detection. Set true for cast rays to be drawn.
+	/// </summary>
+	public bool debug = false;
+	Vector3 lastRayOrigin;
+	Vector3 lastRayHit;
+	Vector3 lastCliffCheck;
 
     void Awake()
 	{
@@ -105,6 +116,15 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		rigidbody2D.AddForce(gravityForce);
 	}
 
+	void Update()
+	{
+		if (debug)
+		{
+			Debug.DrawLine(lastRayOrigin, lastRayHit);
+			Debug.DrawLine(lastRayHit, lastCliffCheck);
+		}
+	}
+
 	public void onTap()
 	{
 		tryJump();
@@ -141,7 +161,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		}
 		else
 		{
-			Debug.Log("Cannot rotate :(");
+			//Debug.Log("Cannot rotate :(");
 			// TODO: Provide some hint that player shouldn't have tried to rotate
 		}
 	}
@@ -175,6 +195,26 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		}
 	}
 
+	private bool canRotate(RotationDirection direction)
+	{
+		if (currentRotationDirection != RotationDirection.None)
+			return false; // If not finished rotating, ignore new requests
+
+		// If trying to rotate clockwise, check for cliff ahead
+		if (direction == RotationDirection.Clockwise)
+		{
+			if (upcomingWallDetected) // We've already detected a wall, can't rotate this way
+				return false;
+
+			// Check for cliff ahead
+			bool upcomingCliff = checkForUpcomingCliff();
+			Debug.Log("Cliff ahead detected? " + upcomingCliff);
+			return upcomingCliff;
+		}
+
+		return direction == RotationDirection.Anticlockwise && upcomingWallDetected;
+	}
+
 	private void beginRotation(RotationDirection direction)
 	{
 		AudioSource.PlayClipAtPoint(rotateSound, Vector3.zero);
@@ -191,46 +231,65 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		StartCoroutine (rotationAnimation(from, to));
 	}
 
-	private bool canRotate(RotationDirection direction)
-	{
-		if (currentRotationDirection != RotationDirection.None)
-			return false; // If not finished rotating, ignore new requests
-
-		return direction == nextRotationDirection;
-	}
-
 	public void OnUpcomingWallDetected()
 	{
-		if (nextRotationDirection == RotationDirection.None)
+		if (currentRotationDirection == RotationDirection.None)
 		{
 			Debug.Log("Upcoming wall!");
-			nextRotationDirection = RotationDirection.Anticlockwise;
-		}
-	}
-
-	public void OnUpcomingCliffDetected()
-	{
-		if (nextRotationDirection == RotationDirection.None)
-		{
-			Debug.Log("Upcoming cliff!");
-			nextRotationDirection = RotationDirection.Clockwise;
+			upcomingWallDetected = true;
 		}
 	}
 
 	public void OnWallCollisionDetected()
 	{
 		// TODO: Die
-		//Debug.Log("Wall collision detected!");
-		//if (currentRotationDirection == RotationDirection.None)
-			//nextRotationDirection = RotationDirection.Anticlockwise; // Save people stuck against walls for now
+		Debug.Log("Wall collision detected!");
 	}
 
-	public void OnCliffEdgeDetected()
+	private bool checkForUpcomingCliff()
 	{
-		// TODO: Something?
-		//Debug.Log("Cliff edge detected!");
-		//if (currentRotationDirection == RotationDirection.None)
-			//nextRotationDirection = RotationDirection.Clockwise; // Save people in free fall for now
+		// To check for an upcoming cliff, we check for a gap in the floor ahead
+		Vector2 groundBelow = findGroundBelow();
+
+		if (groundBelow == Vector2.zero)
+		{
+			Debug.LogWarning("Ground not found below player!");
+			return true; // Let them rotate anyway
+		}
+
+		// Go right and down by some distance
+		Vector2 up = transform.up.normalized;
+		Vector2 right = transform.right.normalized;
+		Vector2 point = groundBelow + right * cliffCheckDistance - up * cliffCheckDrop;
+
+		if (debug)
+			lastCliffCheck = new Vector3(point.x, point.y);
+
+		return Physics2D.OverlapCircle(point, cliffCheckRadius, floorLayerMask) == null;
+	}
+
+	private Vector2 findGroundBelow()
+	{
+		// Find the back of the feet, they are the origin of the raycast
+		Vector2 origin = transform.position
+			+ transform.up.normalized * -0.61f
+			+ transform.right.normalized * -0.16f;
+
+		// Want to cast a ray downwards to hit ground
+		Vector3 down = -transform.up;
+		Vector2 direction = new Vector2(down.x, down.y);
+
+		// Cast the ray
+		RaycastHit2D hit = Physics2D.Raycast(origin, direction, groundRayMaxDistance, floorLayerMask);
+
+		if (debug)
+		{
+			lastRayOrigin = new Vector3(origin.x, origin.y);
+			lastRayHit = new Vector3(hit.point.x, hit.point.y);
+		}
+
+		// If we hit something return position of hit, else zero
+		return hit != null ? hit.point : Vector2.zero;
 	}
 
 	//
@@ -245,7 +304,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		}
 		currentRotation = targetRotation;
 		currentRotationDirection = RotationDirection.None;
-		nextRotationDirection = RotationDirection.None;
+		upcomingWallDetected = false;
 
 		transform.rotation = to;
 
