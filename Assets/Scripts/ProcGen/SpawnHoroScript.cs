@@ -26,11 +26,11 @@ public class SpawnHoroScript : MonoBehaviour {
 		if (ProcGenCounter.platCountLeft == 1 && ProcGenCounter.platCountUp == 1 && ProcGenCounter.platCountDown == 1) //must go left otherwise it creates a closed square
 		{
 			//get the offset depending on the size of the platform
-			if ( platforms[index].name == "SmallHorozontal")
+			if ( platforms[index].name[0] == 'S')
 				leftRight = -5.183f;
-			else if ( platforms[index].name == "MedHorozontal")
+			else if ( platforms[index].name[0] == 'M')
 				leftRight = -10.6f;
-			else if ( platforms[index].name == "LargeHorozontal")
+			else if ( platforms[index].name[0] == 'L')
 				leftRight = -16.02f;
 			
 			//instantiate the platform
@@ -54,11 +54,11 @@ public class SpawnHoroScript : MonoBehaviour {
 		else if (ProcGenCounter.platCountUp == 1 && ProcGenCounter.platCountDown == 1 && ProcGenCounter.platCountRight == 1) //must go right
 		{
 			///get the offset depending on the size of the platform
-			if ( platforms[index].name == "SmallHorozontal")
+			if ( platforms[index].name[0] == 'S')
 				leftRight = 5.183f;
-			else if ( platforms[index].name == "MedHorozontal")
+			else if ( platforms[index].name[0] == 'M')
 				leftRight = 10.6f;
-			else if ( platforms[index].name == "LargeHorozontal")
+			else if ( platforms[index].name[0] == 'L')
 				leftRight = 16.02f;
 			
 			//instantiate the platform
@@ -90,11 +90,11 @@ public class SpawnHoroScript : MonoBehaviour {
 			{
 				ProcGenCounter.platCountRight = 1;
 				//get the offset depending on the size of the platform
-				if ( platforms[index].name == "SmallHorozontal")
+				if ( platforms[index].name[0] == 'S')
 					leftRight = 5.183f;
-				else if ( platforms[index].name == "MedHorozontal")
+				else if ( platforms[index].name[0] == 'M')
 					leftRight = 10.6f;
-				else if ( platforms[index].name == "LargeHorozontal")
+				else if ( platforms[index].name[0] == 'L')
 					leftRight = 16.02f;
 				
 				//instantiate the platform
@@ -107,11 +107,11 @@ public class SpawnHoroScript : MonoBehaviour {
 				ProcGenCounter.platCountLeft = 1;
 				//get the offset depending on the size of the platform
 				//get the offset depending on the size of the platform
-				if ( platforms[index].name == "SmallHorozontal")
+				if ( platforms[index].name[0] == 'S')
 					leftRight = -5.183f;
-				else if ( platforms[index].name == "MedHorozontal")
+				else if ( platforms[index].name[0] == 'M')
 					leftRight = -10.6f;
-				else if ( platforms[index].name == "LargeHorozontal")
+				else if ( platforms[index].name[0] == 'L')
 					leftRight = -16.02f;
 				
 				//instantiate the platform

@@ -27,11 +27,11 @@ public class SpawnVertScript : MonoBehaviour {
 		if (ProcGenCounter.platCountLeft == 1 && ProcGenCounter.platCountUp == 1 && ProcGenCounter.platCountRight == 1) //must go up otherwise it creates a closed square
 		{
 			//get the offset depending on the size of the platform
-			if ( platforms[index].name == "SmallVertical")
+			if ( platforms[index].name[0] == 'S')
 				UpDown = 5.183f;
-			else if ( platforms[index].name == "MedVertical")
+			else if ( platforms[index].name[0] == 'M')
 				UpDown = 10.6f;
-			else if ( platforms[index].name == "LargeVertical")
+			else if ( platforms[index].name[0] == 'L')
 				UpDown = 16.02f;
 			
 			//instantiate the platform
@@ -56,11 +56,11 @@ public class SpawnVertScript : MonoBehaviour {
 		else if (ProcGenCounter.platCountLeft == 1 && ProcGenCounter.platCountDown == 1 && ProcGenCounter.platCountRight == 1) //must go down
 		{
 			//get the offset depending on the size of the platform
-			if ( platforms[index].name == "SmallVertical")
+			if ( platforms[index].name[0] == 'S')
 				UpDown = -5.183f;
-			else if ( platforms[index].name == "MedVertical")
+			else if ( platforms[index].name[0] == 'M')
 				UpDown = -10.6f;
-			else if ( platforms[index].name == "LargeVertical")
+			else if ( platforms[index].name[0] == 'L')
 				UpDown = -16.02f;
 			
 			//instantiate the platform
@@ -92,11 +92,11 @@ public class SpawnVertScript : MonoBehaviour {
 			{
 				ProcGenCounter.platCountUp = 1;
 				//get the offset depending on the size of the platform
-				if ( platforms[index].name == "SmallVertical")
+				if ( platforms[index].name[0] == 'S')
 					UpDown = 5.183f;
-				else if ( platforms[index].name == "MedVertical")
+				else if ( platforms[index].name[0] == 'M')
 					UpDown = 10.6f;
-				else if ( platforms[index].name == "LargeVertical")
+				else if ( platforms[index].name[0] == 'L')
 					UpDown = 16.02f;
 								
 				//instantiate the platform
@@ -108,11 +108,11 @@ public class SpawnVertScript : MonoBehaviour {
 			{
 				ProcGenCounter.platCountDown = 1;
 				//get the offset depending on the size of the platform
-				if ( platforms[index].name == "SmallVertical")
+				if ( platforms[index].name[0] == 'S')
 					UpDown = -5.183f;
-				else if ( platforms[index].name == "MedVertical")
+				else if ( platforms[index].name[0] == 'M')
 					UpDown = -10.6f;
-				else if ( platforms[index].name == "LargeVertical")
+				else if ( platforms[index].name[0] == 'L')
 					UpDown = -16.02f;
 				
 				//instantiate the platform
