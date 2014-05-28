@@ -141,6 +141,8 @@ MonoBehaviour:
   - {fileID: 100002, guid: 1595107e647c97c42a4c4bd0c90bcb35, type: 2}
   - {fileID: 100002, guid: 69d22e4f95218b54da8ea757d8a92124, type: 2}
   - {fileID: 100002, guid: 2c247352ccbcb7748a7ddffa215a9619, type: 2}
+  - {fileID: 100006, guid: 9fbb1c833e059754d8489a6fc9b9d938, type: 2}
+  - {fileID: 100008, guid: 5d3bb33b08c4a834c809e3e17989ce71, type: 2}
   spawnRate: 2
 --- !u!114 &11400002
 MonoBehaviour:

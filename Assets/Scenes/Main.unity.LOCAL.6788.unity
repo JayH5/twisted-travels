@@ -677,7 +677,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 67
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &764522474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -702,7 +702,7 @@ AudioSource:
   serializedVersion: 3
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: .660000026
+  m_Volume: .666000009
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -711,62 +711,22 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 2
+  rolloffMode: 0
   BypassEffects: 0
-  BypassListenerEffects: 1
+  BypassListenerEffects: 0
   BypassReverbZones: 0
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - time: .00200000009
-      value: 1
-      inSlope: -500.200928
-      outSlope: -500.200928
-      tangentMode: 0
-    - time: .0169310346
-      value: 1
-      inSlope: -125.050232
-      outSlope: -125.050232
-      tangentMode: 0
-    - time: .0187758617
-      value: 1
-      inSlope: -31.262558
-      outSlope: -31.262558
-      tangentMode: 0
-    - time: .039706897
+    - time: 0
       value: 1
       inSlope: 0
       outSlope: 0
-      tangentMode: 10
-    - time: .085879311
-      value: 1
-      inSlope: -1.95390987
-      outSlope: -1.95390987
       tangentMode: 0
-    - time: .156017244
-      value: 1
-      inSlope: -.122119367
-      outSlope: -.122119367
-      tangentMode: 0
-    - time: .247379318
-      value: 1
-      inSlope: -.0305298418
-      outSlope: -.0305298418
-      tangentMode: 0
-    - time: .350637943
-      value: .996667862
-      inSlope: -.488477468
-      outSlope: -.488477468
-      tangentMode: 0
-    - time: .621913791
-      value: 1
-      inSlope: -.00763246045
-      outSlope: -.00763246045
-      tangentMode: 0
-    - time: .885775864
-      value: 1
-      inSlope: -.00200079847
-      outSlope: -.00200079847
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -1207,7 +1167,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
-  m_Sprite: {fileID: 21300000, guid: e99cb196706446d4ab9c63979110de4e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1f86fcb50de984845952279249a857cf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1387889632
 GameObject:
@@ -1717,7 +1677,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
-  m_Sprite: {fileID: 21300000, guid: e99cb196706446d4ab9c63979110de4e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1f86fcb50de984845952279249a857cf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &2029204317
 Transform:
