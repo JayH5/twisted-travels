@@ -31,11 +31,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	private int currentRotation = 0;
 	private int targetRotation = 0;
-
-	private enum RotationDirection
-	{
-		Anticlockwise = 90, Clockwise = -90, None = 0
-	}
+	
 	private RotationDirection currentRotationDirection = RotationDirection.None;
 
 	// We cheat physics by preserving the player's velocity after rotating gravity
@@ -82,6 +78,8 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	Vector3 lastCliffCheck;
 	Vector3 lastWallRayOrigin;
 	Vector3 lastWallRayHit;
+
+	public BasicTrackingCamera camera;
 
     void Awake()
 	{
@@ -174,8 +172,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		}
 		else
 		{
-			//Debug.Log("Cannot rotate :(");
-			// TODO: Provide some hint that player shouldn't have tried to rotate
+			camera.shift(direction);
 		}
 	}
 

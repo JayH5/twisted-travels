@@ -168,8 +168,9 @@ MonoBehaviour:
   cliffCheckDrop: .200000003
   cliffCheckRadius: .200000003
   groundRayMaxDistance: 3
-  wallRayMaxDistance: 1.70000005
+  wallRayMaxDistance: 2
   debug: 0
+  camera: {fileID: 599374075}
 --- !u!50 &78646905
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -750,6 +751,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 78646901}
+  shiftDuration: .300000012
 --- !u!1 &625198195
 GameObject:
   m_ObjectHideFlags: 0
