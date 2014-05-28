@@ -12,7 +12,7 @@ GameObject:
   - 23: {fileID: 2300000}
   - 114: {fileID: 11400000}
   - 61: {fileID: 6100002}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ GameObject:
   - 23: {fileID: 2300002}
   - 114: {fileID: 11400004}
   - 61: {fileID: 6100004}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: BoxTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   - 212: {fileID: 21200002}
   - 61: {fileID: 6100006}
   - 50: {fileID: 5000002}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
