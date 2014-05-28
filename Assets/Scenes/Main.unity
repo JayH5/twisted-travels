@@ -284,6 +284,10 @@ Prefab:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 6100000, guid: 69d22e4f95218b54da8ea757d8a92124, type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 3626fe8e008014f6bbd19bb72937b311, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 69d22e4f95218b54da8ea757d8a92124, type: 2}
   m_RootGameObject: {fileID: 480625901}
@@ -444,7 +448,7 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 1104338014}
   m_GameObject: {fileID: 373286980}
   m_Enabled: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 3626fe8e008014f6bbd19bb72937b311, type: 2}
   m_IsTrigger: 0
   m_Size: {x: 32.6100006, y: .5}
   m_Center: {x: 0, y: 0}
@@ -529,9 +533,9 @@ Transform:
   m_LocalPosition: {x: -9.36094666, y: -3.00332785, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1387889637}
   - {fileID: 1343770215}
   - {fileID: 2029204317}
-  - {fileID: 1387889637}
   m_Father: {fileID: 1544372689}
 --- !u!61 &480625903
 BoxCollider2D:
@@ -541,7 +545,7 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 191407957}
   m_GameObject: {fileID: 480625901}
   m_Enabled: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 3626fe8e008014f6bbd19bb72937b311, type: 2}
   m_IsTrigger: 0
   m_Size: {x: 21.7399998, y: .5}
   m_Center: {x: 0, y: 0}
@@ -758,7 +762,7 @@ GameObject:
   - 23: {fileID: 625198199}
   - 114: {fileID: 625198198}
   - 61: {fileID: 625198197}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -995,7 +999,7 @@ GameObject:
   - 23: {fileID: 965595054}
   - 114: {fileID: 965595057}
   - 61: {fileID: 965595055}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoxTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1162,6 +1166,10 @@ Prefab:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 6100000, guid: 1595107e647c97c42a4c4bd0c90bcb35, type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 3626fe8e008014f6bbd19bb72937b311, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1595107e647c97c42a4c4bd0c90bcb35, type: 2}
   m_RootGameObject: {fileID: 373286980}
@@ -1260,7 +1268,7 @@ GameObject:
   - 23: {fileID: 1387889634}
   - 114: {fileID: 1387889633}
   - 61: {fileID: 1387889635}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1415,7 +1423,7 @@ GameObject:
   - 212: {fileID: 1641992659}
   - 61: {fileID: 1641992658}
   - 50: {fileID: 1641992657}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
