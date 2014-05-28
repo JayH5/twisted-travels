@@ -15,13 +15,13 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	public float slackDuration = 2.0f; // Slack duration in seconds
 
 	public float runForce = 4f;				// The fastest the player can travel in the x axis.
-	public float jumpForce = 40f;			// Amount of force added when the player jumps.	
+	public float jumpForce = 40f;			// Amount of force added when the player jumps.
 
 	public AudioClip jumpSound;
 	public AudioClip dashSound;
 	public AudioClip rotateSound;
 
-	Animator anim;										// Reference to the player's animator component.	
+	Animator anim;										// Reference to the player's animator component.
 
 	public float gravityAcceleration = -9.8f; // m/s^2
 
@@ -348,5 +348,6 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 			yield return new WaitForFixedUpdate();
 		}
 	}
+
 
 }
