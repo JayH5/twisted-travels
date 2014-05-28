@@ -10,7 +10,7 @@ public class MusicPlayerC : MonoBehaviour {
 	void Start () {
 		if(!audio.isPlaying)
 		{
-			audio.clip = clips[0];
+			audio.clip = clips[Random.Range(0, clips.Length)];
 			audio.Play();
 		}
 	}
