@@ -81,7 +81,10 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	public BasicTrackingCamera camera;
 	
-
+	public float Distance
+	{
+		get { return distance; }
+	}
 	float distance = 0f;
 	Vector3 previousPosition;
 	float nextDistanceUpdate = 0f; // For debug
@@ -95,6 +98,8 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		// I don't know how to do the listener pattern in Unity so this is haxx
 		GestureHandler handler = GetComponent<GestureHandler>();
 		handler.setSwipeReceiver(this);
+
+		previousPosition = transform.position;
 	}
 
 	void FixedUpdate()
