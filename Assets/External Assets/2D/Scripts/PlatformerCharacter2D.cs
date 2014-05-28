@@ -36,8 +36,6 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	}
 	private RotationDirection currentRotationDirection = RotationDirection.None;
 
-	private bool upcomingWallDetected = false;
-
 	// We cheat physics by preserving the player's velocity after rotating gravity
 	private float preRotationVelocity;
 	// If we restore all the velocity then things are too quick... tone it down a bit
@@ -62,15 +60,26 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	public float cliffCheckDistance = 1.0f;
 	public float cliffCheckDrop = 0.2f;
 	public float cliffCheckRadius = 0.2f;
+
+	/// <summary>
+	/// Maximum distance to search downwards for the floor.
+	/// </summary>
 	public float groundRayMaxDistance = 3.0f;
+
+	/// <summary>
+	/// Maximum dstance to search to the right for a wall.
+	/// </summary>
+	public float wallRayMaxDistance = 1.7f;
 
 	/// <summary>
 	/// Debugging for cliff detection. Set true for cast rays to be drawn.
 	/// </summary>
 	public bool debug = false;
-	Vector3 lastRayOrigin;
-	Vector3 lastRayHit;
+	Vector3 lastGroundRayOrigin;
+	Vector3 lastGroundRayHit;
 	Vector3 lastCliffCheck;
+	Vector3 lastWallRayOrigin;
+	Vector3 lastWallRayHit;
 
     void Awake()
 	{
@@ -120,8 +129,9 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	{
 		if (debug)
 		{
-			Debug.DrawLine(lastRayOrigin, lastRayHit);
-			Debug.DrawLine(lastRayHit, lastCliffCheck);
+			Debug.DrawLine(lastWallRayOrigin, lastWallRayHit);
+			Debug.DrawLine(lastGroundRayOrigin, lastGroundRayHit);
+			Debug.DrawLine(lastGroundRayHit, lastCliffCheck);
 		}
 	}
 
@@ -203,16 +213,15 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		// If trying to rotate clockwise, check for cliff ahead
 		if (direction == RotationDirection.Clockwise)
 		{
-			if (upcomingWallDetected) // We've already detected a wall, can't rotate this way
-				return false;
-
-			// Check for cliff ahead
-			bool upcomingCliff = checkForUpcomingCliff();
-			Debug.Log("Cliff ahead detected? " + upcomingCliff);
-			return upcomingCliff;
+			// Check for wall first because that check is more accurate
+			return !checkForUpcomingWall() && checkForUpcomingCliff();
+		}
+		else if (direction == RotationDirection.Anticlockwise)
+		{
+			return checkForUpcomingWall();
 		}
 
-		return direction == RotationDirection.Anticlockwise && upcomingWallDetected;
+		return false;
 	}
 
 	private void beginRotation(RotationDirection direction)
@@ -231,15 +240,6 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		StartCoroutine (rotationAnimation(from, to));
 	}
 
-	public void OnUpcomingWallDetected()
-	{
-		if (currentRotationDirection == RotationDirection.None)
-		{
-			Debug.Log("Upcoming wall!");
-			upcomingWallDetected = true;
-		}
-	}
-
 	public void OnWallCollisionDetected()
 	{
 		// TODO: Die
@@ -251,7 +251,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		// To check for an upcoming cliff, we check for a gap in the floor ahead
 		Vector2 groundBelow = findGroundBelow();
 
-		if (groundBelow == Vector2.zero)
+		if (groundBelow == default(Vector2))
 		{
 			Debug.LogWarning("Ground not found below player!");
 			return true; // Let them rotate anyway
@@ -275,21 +275,37 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 			+ transform.up.normalized * -0.61f
 			+ transform.right.normalized * -0.16f;
 
-		// Want to cast a ray downwards to hit ground
-		Vector3 down = -transform.up;
-		Vector2 direction = new Vector2(down.x, down.y);
+		// Want to cast a ray downwards to hit the ground
+		Vector2 direction = -transform.up;
 
 		// Cast the ray
 		RaycastHit2D hit = Physics2D.Raycast(origin, direction, groundRayMaxDistance, floorLayerMask);
 
 		if (debug)
 		{
-			lastRayOrigin = new Vector3(origin.x, origin.y);
-			lastRayHit = new Vector3(hit.point.x, hit.point.y);
+			lastGroundRayOrigin = origin;
+			lastGroundRayHit = hit.point;
 		}
 
 		// If we hit something return position of hit, else zero
-		return hit != null ? hit.point : Vector2.zero;
+		return hit.collider != null ? hit.point : default(Vector2);
+	}
+
+	private bool checkForUpcomingWall()
+	{
+		// Cast ray from player to right and try hit wall
+		Vector2 origin = transform.position;
+		Vector2 direction = transform.right;
+
+		RaycastHit2D hit = Physics2D.Raycast(origin, direction, wallRayMaxDistance, floorLayerMask);
+
+		if (debug)
+		{
+			lastWallRayOrigin = origin;
+			lastWallRayHit = hit.collider != null ? hit.point : origin + direction.normalized * wallRayMaxDistance;
+		}
+
+		return hit.collider != null;
 	}
 
 	//
@@ -304,7 +320,6 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		}
 		currentRotation = targetRotation;
 		currentRotationDirection = RotationDirection.None;
-		upcomingWallDetected = false;
 
 		transform.rotation = to;
 
