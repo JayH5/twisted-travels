@@ -560,7 +560,7 @@ Prefab:
     - target: {fileID: 21200000, guid: f7906de6d98d5594fa16c43c54c949fe, type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 1f86fcb50de984845952279249a857cf,
+      objectReference: {fileID: 21300000, guid: e99cb196706446d4ab9c63979110de4e,
         type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f7906de6d98d5594fa16c43c54c949fe, type: 2}
@@ -847,7 +847,7 @@ Prefab:
     - target: {fileID: 21200000, guid: f7906de6d98d5594fa16c43c54c949fe, type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 1f86fcb50de984845952279249a857cf,
+      objectReference: {fileID: 21300000, guid: e99cb196706446d4ab9c63979110de4e,
         type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f7906de6d98d5594fa16c43c54c949fe, type: 2}
@@ -940,6 +940,16 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: -4.37113883e-08
       objectReference: {fileID: 0}
+    - target: {fileID: 21200000, guid: 9fbb1c833e059754d8489a6fc9b9d938, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e99cb196706446d4ab9c63979110de4e,
+        type: 3}
+    - target: {fileID: 21200002, guid: 9fbb1c833e059754d8489a6fc9b9d938, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e99cb196706446d4ab9c63979110de4e,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9fbb1c833e059754d8489a6fc9b9d938, type: 2}
   m_RootGameObject: {fileID: 1771988211}
@@ -1390,7 +1400,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
-  m_Sprite: {fileID: 21300000, guid: 1f86fcb50de984845952279249a857cf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e99cb196706446d4ab9c63979110de4e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1544372688
 GameObject:
@@ -1523,7 +1533,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
-  m_Sprite: {fileID: 21300000, guid: 1f86fcb50de984845952279249a857cf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e99cb196706446d4ab9c63979110de4e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1605694295
 GameObject:
