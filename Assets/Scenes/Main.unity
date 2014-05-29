@@ -563,6 +563,10 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: e99cb196706446d4ab9c63979110de4e,
         type: 3}
+    - target: {fileID: 11400000, guid: f7906de6d98d5594fa16c43c54c949fe, type: 2}
+      propertyPath: smashForce
+      value: 50000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f7906de6d98d5594fa16c43c54c949fe, type: 2}
   m_RootGameObject: {fileID: 1343770214}
@@ -917,6 +921,7 @@ GameObject:
   - 212: {fileID: 1343770218}
   - 61: {fileID: 1343770217}
   - 50: {fileID: 1343770216}
+  - 114: {fileID: 1343770219}
   m_Layer: 0
   m_Name: Box
   m_TagString: Untagged
@@ -987,6 +992,19 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_Sprite: {fileID: 21300000, guid: e99cb196706446d4ab9c63979110de4e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1343770219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f7906de6d98d5594fa16c43c54c949fe,
+    type: 2}
+  m_PrefabInternal: {fileID: 536218996}
+  m_GameObject: {fileID: 1343770214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0508d1a0288094a5ba600c6d88a6e147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smashForce: 50000
 --- !u!1 &1387889632
 GameObject:
   m_ObjectHideFlags: 0
@@ -1155,6 +1173,7 @@ GameObject:
   - 212: {fileID: 2029204316}
   - 61: {fileID: 2029204315}
   - 50: {fileID: 2029204314}
+  - 114: {fileID: 2029204318}
   m_Layer: 0
   m_Name: Box
   m_TagString: Untagged
@@ -1225,3 +1244,16 @@ Transform:
   m_LocalScale: {x: .447407484, y: .447407871, z: 1}
   m_Children: []
   m_Father: {fileID: 480625902}
+--- !u!114 &2029204318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: f7906de6d98d5594fa16c43c54c949fe,
+    type: 2}
+  m_PrefabInternal: {fileID: 774879289}
+  m_GameObject: {fileID: 2029204313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0508d1a0288094a5ba600c6d88a6e147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smashForce: 5000

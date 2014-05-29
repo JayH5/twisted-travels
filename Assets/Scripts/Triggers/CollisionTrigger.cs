@@ -3,14 +3,13 @@ using System.Collections;
 
 namespace Triggers {
 
-	public class WallCollisionTrigger : MonoBehaviour {
+	public class CollisionTrigger : MonoBehaviour {
 
 		public PlatformerCharacter2D character;
 		
 		void OnTriggerEnter2D(Collider2D other)
 		{
-			if (other.name == "Floor")
-				character.OnWallCollisionDetected();
+			character.OnCollisionDetected(other);
 		}
 		
 		void OnTriggerExit2D(Collider2D other)

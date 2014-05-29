@@ -281,10 +281,15 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		StartCoroutine (rotationAnimation(from, to));
 	}
 
-	public void OnWallCollisionDetected()
+	public void OnCollisionDetected(Collider2D collider)
 	{
 		// TODO: Die
-		Debug.Log("Wall collision detected!");
+		Debug.Log("Collision detected with a " + collider.name);
+		if (isDashing && collider.name == "Box")
+		{
+			GameObject box = collider.gameObject;
+			box.GetComponent<BoxSmash>().smash(transform.right);
+		}
 	}
 
 	private bool checkForUpcomingCliff()
