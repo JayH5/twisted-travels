@@ -90,7 +90,25 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	float nextDistanceUpdate = 0f; // For debug
 	float distanceBetweenUpdates = 10f;
 
-    void Awake()
+	/// <summary>
+	/// Gets a value indicating whether the player is dashing.
+	/// </summary>
+	public bool IsDashing
+	{
+		get { return isDashing; }
+	}
+	bool isDashing = false;
+
+	/// <summary>
+	/// Gets a value indicating whether the player is slacking.
+	/// </summary>
+	public bool IsSlacking
+	{
+		get { return isSlacking; }
+	}
+	bool isSlacking = false;
+
+	void Awake()
 	{
 		anim = GetComponent<Animator>();
 		anim.SetBool("Ground", IsGrounded);
@@ -111,13 +129,15 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		anim.SetFloat("vSpeed", vSpeed);
 		anim.SetFloat("Speed", speed);
 
-		Vector2 right = new Vector2(transform.right.x, transform.right.y);
-		right.Normalize();
+		Vector2 right = transform.right.normalized;
 
 		// Add running force if grounded and below max speed
-		if (IsGrounded && speed < maxSpeed)
+		if (IsGrounded)
 		{
-			rigidbody2D.AddForce(right * runForce);
+			if (speed < maxSpeed) // If below target speed, speed up
+				rigidbody2D.AddForce(right * runForce);
+			else if (!isDashing) // If above target speed and done dashing, slow down
+				rigidbody2D.AddForce(-right * runForce);
 		}
 
 		if (slackCoolDown > 0.0f)
@@ -351,23 +371,27 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	IEnumerator dashAnimation()
 	{
 		//Debug.Log ("Dashing!");
+		isDashing = true;
 		for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / dashDuration)
 		{
 			float magnitude = Mathf.Lerp(dashForce, 0.0f, i);
 			rigidbody2D.AddForce(transform.right * magnitude);
 			yield return new WaitForFixedUpdate();
 		}
+		isDashing = false;
 	}
 
 	IEnumerator slackAnimation()
 	{
 		//Debug.Log ("Slacking off...");
+		isSlacking = true;
 		for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / slackDuration)
 		{
 			float magnitude = Mathf.Lerp(slackForce, 0.0f, i);
 			rigidbody2D.AddForce(-transform.right * magnitude);
 			yield return new WaitForFixedUpdate();
 		}
+		isSlacking = false;
 	}
 
 
