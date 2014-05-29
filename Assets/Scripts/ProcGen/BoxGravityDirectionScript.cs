@@ -12,10 +12,14 @@ public class BoxGravityDirectionScript : MonoBehaviour {
 		Transform daddy;
 
 		//get the platform as daddy
-		if (transform.parent.name[0] != 'S' && transform.parent.name[0] != 'M' && transform.parent.name[0] != 'L')
-			daddy = transform.parent.transform.parent;
-		else 
-			daddy = transform.parent;
+		if (transform.parent != null)
+		{
+			if (transform.parent.name[0] != 'S' && transform.parent.name[0] != 'M' && transform.parent.name[0] != 'L')
+				daddy = transform.parent.transform.parent;
+			else 
+				daddy = transform.parent;
+		}
+		else daddy = transform;
 
 		//set daddy as a platformScleanupScript
 		PlatformCleanupScript pcs = daddy.GetComponent<PlatformCleanupScript> ();
@@ -24,24 +28,24 @@ public class BoxGravityDirectionScript : MonoBehaviour {
 		if (daddy.gameObject.transform.rotation.z > 0.9) //upside down
 		{
 			rigidbody2D.gravityScale = -8;
-			print ("Pushing UP");
+			//print ("Pushing UP");
 		}
 		else if (daddy.gameObject.transform.rotation.z == 0) //normal way up
 		{
 			rigidbody2D.gravityScale = 8;
-			print ("Pushing DOWN");
+			//print ("Pushing DOWN");
 		}
 		else if(pcs.upDown == 1) //up 
 		{	
 			rigidbody2D.gravityScale = 0;
 			toRight = true;
-			print ("Pushing RIGHT");
+			//print ("Pushing RIGHT");
 		}	
 		else if(pcs.upDown == 0) //down
 		{
 			rigidbody2D.gravityScale = 0;
 			toLeft = true;
-			print ("Pushing LEFT");
+			//print ("Pushing LEFT");
 		}
 
 	}

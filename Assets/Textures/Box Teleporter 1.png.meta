@@ -49,7 +49,7 @@ TextureImporter:
         width: 191
         height: 155
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
     - name: Box Teleporter 1_1
       rect:
         serializedVersion: 2
@@ -58,7 +58,7 @@ TextureImporter:
         width: 195
         height: 155
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
     - name: Box Teleporter 1_2
       rect:
         serializedVersion: 2
@@ -67,7 +67,7 @@ TextureImporter:
         width: 199
         height: 154
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
     - name: Box Teleporter 1_3
       rect:
         serializedVersion: 2
@@ -76,7 +76,7 @@ TextureImporter:
         width: 201
         height: 154
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
     - name: Box Teleporter 1_4
       rect:
         serializedVersion: 2
@@ -85,7 +85,7 @@ TextureImporter:
         width: 202
         height: 153
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
     - name: Box Teleporter 1_5
       rect:
         serializedVersion: 2
@@ -94,7 +94,7 @@ TextureImporter:
         width: 202
         height: 153
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
     - name: Box Teleporter 1_6
       rect:
         serializedVersion: 2
@@ -103,7 +103,7 @@ TextureImporter:
         width: 199
         height: 152
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
     - name: Box Teleporter 1_7
       rect:
         serializedVersion: 2
@@ -112,7 +112,7 @@ TextureImporter:
         width: 197
         height: 152
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
     - name: Box Teleporter 1_8
       rect:
         serializedVersion: 2
@@ -121,6 +121,6 @@ TextureImporter:
         width: 191
         height: 152
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
   spritePackingTag: 
   userData: 

@@ -31,7 +31,7 @@ public class SpawnHoroScript : MonoBehaviour {
 			else if ( platforms[index].name[0] == 'M')
 				leftRight = -10.6f;
 			else if ( platforms[index].name[0] == 'L')
-				leftRight = -16.02f;
+				leftRight = -16.05f;
 			
 			//instantiate the platform
 			Instantiate (platforms[index], new Vector3(transform.position.x  + leftRight, transform.position.y, transform.position.z) , Quaternion.AngleAxis(180,new Vector3(0,0,1)));
@@ -59,7 +59,7 @@ public class SpawnHoroScript : MonoBehaviour {
 			else if ( platforms[index].name[0] == 'M')
 				leftRight = 10.6f;
 			else if ( platforms[index].name[0] == 'L')
-				leftRight = 16.02f;
+				leftRight = 16.05f;
 			
 			//instantiate the platform
 			Instantiate (platforms[index], new Vector3(transform.position.x  + leftRight, transform.position.y, transform.position.z) , Quaternion.AngleAxis(0,new Vector3(0,0,1)));
@@ -95,7 +95,7 @@ public class SpawnHoroScript : MonoBehaviour {
 				else if ( platforms[index].name[0] == 'M')
 					leftRight = 10.6f;
 				else if ( platforms[index].name[0] == 'L')
-					leftRight = 16.02f;
+					leftRight = 16.05f;
 				
 				//instantiate the platform
 				Instantiate (platforms[index], new Vector3(transform.position.x  + leftRight, transform.position.y, transform.position.z) , Quaternion.AngleAxis(0,new Vector3(0,0,1)));
@@ -112,7 +112,7 @@ public class SpawnHoroScript : MonoBehaviour {
 				else if ( platforms[index].name[0] == 'M')
 					leftRight = -10.6f;
 				else if ( platforms[index].name[0] == 'L')
-					leftRight = -16.02f;
+					leftRight = -16.05f;
 				
 				//instantiate the platform
 				Instantiate (platforms[index], new Vector3(transform.position.x  + leftRight, transform.position.y, transform.position.z) , Quaternion.AngleAxis(180,new Vector3(0,0,1)));
