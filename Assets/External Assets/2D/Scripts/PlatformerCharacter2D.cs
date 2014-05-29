@@ -20,6 +20,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	public float maxSpeed = 8f;
 
 	Animator anim;										// Reference to the player's animator component.
+	public AudioClip boxPortalSpawnSound;
 
 	public float gravityAcceleration = -9.8f; // m/s^2
 
@@ -287,6 +288,12 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		{
 			GameObject box = collider.gameObject;
 			box.GetComponent<BoxSmash>().smash(transform.right);
+		}
+
+		if(collider.tag == "BoxPortal")
+		{
+			AudioSource.PlayClipAtPoint(boxPortalSpawnSound, new Vector3 (0,0,0));
+			collider.tag = "Untagged";
 		}
 	}
 
