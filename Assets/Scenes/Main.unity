@@ -1267,6 +1267,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 2109667731}
   - 114: {fileID: 2109667730}
+  - 114: {fileID: 2109667732}
   m_Layer: 0
   m_Name: GameplayGUI
   m_TagString: Untagged
@@ -1356,3 +1357,29 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1544372689}
+--- !u!114 &2109667732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2109667729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de0517cfa336d46938214796161dacde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skin: {fileID: 0}
+  mat: {fileID: 0}
+  lowFPSColor: {r: 1, g: 0, b: 0, a: 1}
+  highFPSColor: {r: 0, g: 1, b: 0, a: 1}
+  lowFPS: 30
+  highFPS: 50
+  start: {fileID: 0}
+  statColor: {r: 1, g: .921568632, b: .0156862754, a: 1}
+  credits:
+  - University of Cape Town
+  - Daniel Burnham-King
+  - Jamie Hewland
+  - Matthew Wood
+  - Wesley Robinson
+  crediticons: []

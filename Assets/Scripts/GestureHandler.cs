@@ -17,8 +17,6 @@ namespace Gestures
 
 		void Update ()
 		{
-			if (Input.GetKeyDown(KeyCode.Escape)) {	Application.Quit();	}
-
 			if (gestureReceiver == null)
 				return;
 

@@ -79,7 +79,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	Vector3 lastWallRayOrigin;
 	Vector3 lastWallRayHit;
 
-	public BasicTrackingCamera camera;
+	public BasicTrackingCamera cameraScript;
 	
 	public float Distance
 	{
@@ -213,7 +213,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		}
 		else
 		{
-			camera.shift(direction);
+			cameraScript.shift(direction);
 		}
 	}
 
