@@ -170,7 +170,7 @@ namespace GUIs {
 		
 		void ShowBackButton() {
 			float x = 20 * scaleX;
-			float y = Screen.height - 50 * scaleY;
+			float y = 20 * scaleY;
 			float w = 50 * scaleX;
 			float h = 20 * scaleY;
 			if (GUI.Button(new Rect(x, y, w, h), "Back", fontScaleButton)) {
@@ -307,7 +307,7 @@ namespace GUIs {
 			}
 		}
 		
-		void PauseGame() {
+		public void PauseGame() {
 			savedTimeScale = Time.timeScale;
 			Time.timeScale = 0;
 			AudioListener.pause = true;
