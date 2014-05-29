@@ -304,7 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0508d1a0288094a5ba600c6d88a6e147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smashForce: 50000
+  smashForce: 50
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0508d1a0288094a5ba600c6d88a6e147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smashForce: 50000
+  smashForce: 50
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

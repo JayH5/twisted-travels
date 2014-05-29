@@ -4,10 +4,10 @@ using System.Collections;
 public class BoxSmash : MonoBehaviour {
 
 	SpriteRenderer renderer;
-	float textureFadeDuration = 1.0f;
+	float textureFadeDuration = .5f;
 	bool isSmashed = false;
 
-	public float smashForce = 50000.0f;
+	public float smashForce = 50.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +25,7 @@ public class BoxSmash : MonoBehaviour {
 		{
 			Debug.Log ("SMASH!");
 			isSmashed = true;
+			rigidbody2D.mass = .5f; // Make it easy to smash
 			rigidbody2D.AddForceAtPosition(from.normalized * smashForce, Random.insideUnitSphere); // Send it flying
 			collider2D.isTrigger = true; // Hack to make other objects go through box
 			StartCoroutine(textureFadeAnimation());

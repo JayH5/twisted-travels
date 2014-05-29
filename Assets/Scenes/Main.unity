@@ -438,8 +438,8 @@ Transform:
   m_LocalPosition: {x: -9.36094666, y: -3.00332785, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1343770215}
   - {fileID: 2029204317}
+  - {fileID: 1343770215}
   - {fileID: 1387889637}
   m_Father: {fileID: 1544372689}
 --- !u!61 &480625903
@@ -565,7 +565,7 @@ Prefab:
         type: 3}
     - target: {fileID: 11400000, guid: f7906de6d98d5594fa16c43c54c949fe, type: 2}
       propertyPath: smashForce
-      value: 50000
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f7906de6d98d5594fa16c43c54c949fe, type: 2}
@@ -1004,7 +1004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0508d1a0288094a5ba600c6d88a6e147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smashForce: 50000
+  smashForce: 50
 --- !u!1 &1387889632
 GameObject:
   m_ObjectHideFlags: 0
@@ -1256,4 +1256,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0508d1a0288094a5ba600c6d88a6e147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smashForce: 5000
+  smashForce: 50
