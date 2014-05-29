@@ -23,6 +23,7 @@ public class SpawnVertScript : MonoBehaviour {
 	
 	void Spawn()
 	{
+		index = Random.Range (0, platforms.GetLength (0)); //get a random platform from the platforms array
 
 		if (ProcGenCounter.platCountLeft == 1 && ProcGenCounter.platCountUp == 1 && ProcGenCounter.platCountRight == 1) //must go up otherwise it creates a closed square
 		{
@@ -32,7 +33,7 @@ public class SpawnVertScript : MonoBehaviour {
 			else if ( platforms[index].name[0] == 'M')
 				UpDown = 10.6f;
 			else if ( platforms[index].name[0] == 'L')
-				UpDown = 16.02f;
+				UpDown = 16.05f;
 
 			ProcGenCounter.last2[1] = "up";
 			
@@ -63,7 +64,7 @@ public class SpawnVertScript : MonoBehaviour {
 			else if ( platforms[index].name[0] == 'M')
 				UpDown = -10.6f;
 			else if ( platforms[index].name[0] == 'L')
-				UpDown = -16.02f;
+				UpDown = -16.05f;
 
 			ProcGenCounter.last2[1] = "down";
 			
@@ -88,7 +89,6 @@ public class SpawnVertScript : MonoBehaviour {
 		}
 		else //random
 		{
-			index = Random.Range (0, platforms.GetLength (0)); //get a random platform from the platforms array
 			//print (index);
 			
 			int dice = Random.Range (0, 2); //decide weather the platform if going up or down
@@ -101,7 +101,7 @@ public class SpawnVertScript : MonoBehaviour {
 				else if ( platforms[index].name[0] == 'M')
 					UpDown = 10.6f;
 				else if ( platforms[index].name[0] == 'L')
-					UpDown = 16.02f;
+					UpDown = 16.05f;
 
 				ProcGenCounter.last2[1] = "up";
 								
@@ -119,7 +119,7 @@ public class SpawnVertScript : MonoBehaviour {
 				else if ( platforms[index].name[0] == 'M')
 					UpDown = -10.6f;
 				else if ( platforms[index].name[0] == 'L')
-					UpDown = -16.02f;
+					UpDown = -16.05f;
 
 				ProcGenCounter.last2[1] = "down";
 				
