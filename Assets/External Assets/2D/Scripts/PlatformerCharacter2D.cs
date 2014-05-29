@@ -23,6 +23,8 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	public AudioClip dashSound;
 	public AudioClip rotateSound;
 
+	public ParticleSystem dashParticle;
+
 	Animator anim;										// Reference to the player's animator component.
 
 	public float gravityAcceleration = -9.8f; // m/s^2
@@ -116,6 +118,8 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		// I don't know how to do the listener pattern in Unity so this is haxx
 		GestureHandler handler = GetComponent<GestureHandler>();
 		handler.setSwipeReceiver(this);
+
+		dashParticle.Stop ();
 
 		previousPosition = transform.position;
 	}
@@ -377,12 +381,14 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	{
 		//Debug.Log ("Dashing!");
 		isDashing = true;
+		dashParticle.Play();
 		for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / dashDuration)
 		{
 			float magnitude = Mathf.Lerp(dashForce, 0.0f, i);
 			rigidbody2D.AddForce(transform.right * magnitude);
 			yield return new WaitForFixedUpdate();
 		}
+		dashParticle.particleSystem.Stop();
 		isDashing = false;
 	}
 
