@@ -382,8 +382,6 @@ Transform:
   m_LocalPosition: {x: -9.36094666, y: -3.00332785, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1343770215}
-  - {fileID: 2029204317}
   - {fileID: 1387889637}
   m_Father: {fileID: 1544372689}
 --- !u!61 &480625903
