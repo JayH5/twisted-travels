@@ -19,10 +19,6 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	public float maxSpeed = 8f;
 
-	public AudioClip jumpSound;
-	public AudioClip dashSound;
-	public AudioClip rotateSound;
-
 	Animator anim;										// Reference to the player's animator component.
 
 	public float gravityAcceleration = -9.8f; // m/s^2
@@ -107,6 +103,8 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		get { return isSlacking; }
 	}
 	bool isSlacking = false;
+
+	public EffectsPlayer effectsPlayer;
 
 	void Awake()
 	{
@@ -221,7 +219,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	{
 		if (IsGrounded)
 		{
-			AudioSource.PlayClipAtPoint(jumpSound, Vector3.zero);
+			effectsPlayer.jump();
 			anim.SetBool("Ground", false);
 			rigidbody2D.AddForce(transform.up * jumpForce);
 		}
@@ -240,7 +238,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	{
 		if (IsGrounded && dashCoolDown <= 0.0f)
 		{
-			AudioSource.PlayClipAtPoint(dashSound, Vector3.zero);
+			effectsPlayer.dash();
 			dashCoolDown = dashCoolDownTime;
 			StartCoroutine(dashAnimation());
 		}
@@ -267,7 +265,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	private void beginRotation(RotationDirection direction)
 	{
-		AudioSource.PlayClipAtPoint(rotateSound, Vector3.zero);
+		effectsPlayer.rotate();
 
 		targetRotation = currentRotation + (int) direction;
 		currentRotationDirection = direction;

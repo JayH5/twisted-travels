@@ -155,9 +155,6 @@ MonoBehaviour:
   runForce: 4
   jumpForce: 250
   maxSpeed: 8
-  jumpSound: {fileID: 8300000, guid: b02f8486ece4b42d9a6ab3bd1b7d1fc2, type: 3}
-  dashSound: {fileID: 8300000, guid: a7c8f53ec381545a386bf0ea687cd673, type: 3}
-  rotateSound: {fileID: 8300000, guid: 79a9b8fa8bb4d4fc3891a2389a61b853, type: 3}
   gravityAcceleration: -9.80000019
   rotationTime: .400000006
   postRotationBoostFraction: .699999988
@@ -170,7 +167,8 @@ MonoBehaviour:
   groundRayMaxDistance: 3
   wallRayMaxDistance: 5
   debug: 0
-  camera: {fileID: 599374075}
+  cameraScript: {fileID: 599374075}
+  effectsPlayer: {fileID: 2133368789}
 --- !u!50 &78646905
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -1121,6 +1119,7 @@ Transform:
   m_LocalPosition: {x: 2.55702043, y: .212725997, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 2133368788}
   - {fileID: 2109667731}
   - {fileID: 480625902}
   - {fileID: 78646901}
@@ -1376,6 +1375,8 @@ MonoBehaviour:
   highFPS: 50
   start: {fileID: 0}
   statColor: {r: 1, g: .921568632, b: .0156862754, a: 1}
+  nativeWidth: 480
+  nativeHeight: 270
   credits:
   - University of Cape Town
   - Daniel Burnham-King
@@ -1383,3 +1384,47 @@ MonoBehaviour:
   - Matthew Wood
   - Wesley Robinson
   crediticons: []
+  gestureHandler: {fileID: 78646903}
+  effectsPlayer: {fileID: 2133368789}
+--- !u!1 &2133368787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 2133368788}
+  - 114: {fileID: 2133368789}
+  m_Layer: 0
+  m_Name: EffectsPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2133368788
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2133368787}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1544372689}
+--- !u!114 &2133368789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2133368787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bafd8505063e43baa72fe75b387e55c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpSound: {fileID: 8300000, guid: b02f8486ece4b42d9a6ab3bd1b7d1fc2, type: 3}
+  dashSound: {fileID: 8300000, guid: a7c8f53ec381545a386bf0ea687cd673, type: 3}
+  rotateSound: {fileID: 8300000, guid: 79a9b8fa8bb4d4fc3891a2389a61b853, type: 3}
+  enabled: 1

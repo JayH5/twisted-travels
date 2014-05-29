@@ -33,6 +33,9 @@ namespace GUIs {
 		public GameObject start;
 		
 		public Color statColor = Color.yellow;
+
+		public int nativeWidth = 480;
+		public int nativeHeight = 270;
 		
 		public string[] credits =
 		{
@@ -54,13 +57,27 @@ namespace GUIs {
 		private float fps;
 		
 		private int toolbarInt = 0;
-		private string[]  toolbarstrings =  {"Audio","Stats","System"};
-		
+		private string[]  toolbarstrings =  {"Settings","Stats","System"};
+
+		// Scaling for GUI elements to account for screen res
+		private float scaleX;
+		private float scaleY;
+		private GUIStyle fontScaleButton;
+		private GUIStyle fontScaleToggle;
+		private GUIStyle fontScaleLabel;
+
+		public Gestures.GestureHandler gestureHandler;
+		public EffectsPlayer effectsPlayer;
 		
 		void Start() {
 			fpsarray = new float[Screen.width];
 			Time.timeScale = 1;
 			PauseGame();
+
+			Debug.Log("Screen width = " + Screen.width);
+			Debug.Log("Screen height = " + Screen.height);
+			scaleX = Screen.width / nativeWidth;
+			scaleY = Screen.height / nativeHeight;
 		}
 		
 		void ScrollFPS() {
@@ -96,11 +113,27 @@ namespace GUIs {
 				}
 			}
 		}
+
+		/// <summary>
+		/// Thanks for nothing, Unity. :'(
+		/// </summary>
+		void initFontScale()
+		{
+			if (fontScaleButton != null)
+				return;
+			fontScaleButton = new GUIStyle(GUI.skin.button);
+			fontScaleButton.fontSize = (int)(16 * scaleX);
+			fontScaleToggle = new GUIStyle(GUI.skin.toggle);
+			fontScaleToggle.fontSize = (int)(16 * scaleX);
+			fontScaleLabel = new GUIStyle(GUI.skin.label);
+			fontScaleLabel.fontSize = (int)(16 * scaleX);
+		}
 		
 		void OnGUI () {
 			if (skin != null) {
 				GUI.skin = skin;
 			}
+			initFontScale();
 			ShowStatNums();
 			if (IsGamePaused()) {
 				GUI.color = statColor;
@@ -115,9 +148,9 @@ namespace GUIs {
 		
 		void ShowToolbar() {
 			BeginPage(300,300);
-			toolbarInt = GUILayout.Toolbar (toolbarInt, toolbarstrings);
+			toolbarInt = GUILayout.Toolbar (toolbarInt, toolbarstrings, fontScaleButton);
 			switch (toolbarInt) {
-			case 0: VolumeControl(); break;
+			case 0: Settings(); break;
 			case 1: StatControl(); break;
 			case 2: ShowDevice(); break;
 			}
@@ -127,53 +160,60 @@ namespace GUIs {
 		void ShowCredits() {
 			BeginPage(300,300);
 			foreach(string credit in credits) {
-				GUILayout.Label(credit);
+				GUILayout.Label(credit, fontScaleLabel);
 			}
 			foreach( Texture credit in crediticons) {
-				GUILayout.Label(credit);
+				GUILayout.Label(credit, fontScaleLabel);
 			}
 			EndPage();
 		}
 		
 		void ShowBackButton() {
-			if (GUI.Button(new Rect(20, Screen.height - 50, 50, 20), "Back")) {
+			float x = 20 * scaleX;
+			float y = Screen.height - 50 * scaleY;
+			float w = 50 * scaleX;
+			float h = 20 * scaleY;
+			if (GUI.Button(new Rect(x, y, w, h), "Back", fontScaleButton)) {
 				currentPage = Page.Main;
 			}
 		}
 		
 		void ShowDevice() {
-			GUILayout.Label("Unity player version "+Application.unityVersion);
+			GUILayout.Label("Unity player version "+Application.unityVersion, fontScaleLabel);
 			GUILayout.Label("Graphics: "+SystemInfo.graphicsDeviceName+" "+
 			                SystemInfo.graphicsMemorySize+"MB\n"+
 			                SystemInfo.graphicsDeviceVersion+"\n"+
-			                SystemInfo.graphicsDeviceVendor);
-			GUILayout.Label("Shadows: "+SystemInfo.supportsShadows);
-			GUILayout.Label("Image Effects: "+SystemInfo.supportsImageEffects);
-			GUILayout.Label("Render Textures: "+SystemInfo.supportsRenderTextures);
+			                SystemInfo.graphicsDeviceVendor, fontScaleLabel);
+			GUILayout.Label("Shadows: "+SystemInfo.supportsShadows, fontScaleLabel);
+			GUILayout.Label("Image Effects: "+SystemInfo.supportsImageEffects, fontScaleLabel);
+			GUILayout.Label("Render Textures: "+SystemInfo.supportsRenderTextures, fontScaleLabel);
 		}
 
 		void ShowQuitConfirm() {
 			BeginPage(200,200);
-			GUILayout.Label("Are you sure you want to quit?");
-			if (GUILayout.Button("Yes")) {
+			GUILayout.Label("Are you sure you want to quit?", fontScaleLabel);
+			if (GUILayout.Button("Yes", fontScaleButton)) {
 				Application.Quit();
 			}
-			if (GUILayout.Button("No")) {
+			if (GUILayout.Button("No", fontScaleButton)) {
 				currentPage = Page.Main;
 			}
 			EndPage();
 		}
 		
-		void VolumeControl() {
-			GUILayout.Label("Volume");
-			AudioListener.volume = GUILayout.HorizontalSlider(AudioListener.volume, 0, 1);
+		void Settings() {
+			if (GUILayout.Toggle(true, "Game music", fontScaleToggle)) {
+				// TODO
+			}
+			effectsPlayer.muted = !GUILayout.Toggle(!effectsPlayer.muted, "Sound effects", fontScaleToggle);
+			gestureHandler.inverted = GUILayout.Toggle(gestureHandler.inverted, "Invert controls", fontScaleToggle);
 		}
 		
 		void StatControl() {
 			GUILayout.BeginHorizontal();
-			showfps = GUILayout.Toggle(showfps,"FPS");
-			showtris = GUILayout.Toggle(showtris,"Triangles");
-			showvtx = GUILayout.Toggle(showvtx,"Vertices");
+			showfps = GUILayout.Toggle(showfps, "FPS", fontScaleToggle);
+			showtris = GUILayout.Toggle(showtris, "Triangles", fontScaleToggle);
+			showvtx = GUILayout.Toggle(showvtx, "Vertices", fontScaleToggle);
 			GUILayout.EndHorizontal();
 		}
 		
@@ -185,27 +225,34 @@ namespace GUIs {
 		}
 		
 		void ShowStatNums() {
-			GUILayout.BeginArea( new Rect(Screen.width - 100, 10, 100, 200));
+			float x = Screen.width - 100 * scaleX;
+			float y = 10 * scaleY;
+			float w = 100 * scaleX;
+			float h = 200 * scaleY;
+			GUILayout.BeginArea(new Rect(x, y, w, h));
 			if (showfps) {
 				string fpsstring= fps.ToString ("#,##0 fps");
 				GUI.color = Color.Lerp(lowFPSColor, highFPSColor,(fps-lowFPS)/(highFPS-lowFPS));
-				GUILayout.Label (fpsstring);
+				GUILayout.Label (fpsstring, fontScaleLabel);
 			}
 			if (showtris || showvtx) {
 				GetObjectStats();
 				GUI.color = statColor;
 			}
 			if (showtris) {
-				GUILayout.Label (tris+"tri");
+				GUILayout.Label (tris+"tri", fontScaleLabel);
 			}
 			if (showvtx) {
-				GUILayout.Label (verts+"vtx");
+				GUILayout.Label (verts+"vtx", fontScaleLabel);
 			}
 			GUILayout.EndArea();
 		}
 		
 		void BeginPage(int width, int height) {
-			GUILayout.BeginArea( new Rect((Screen.width - width) / 2, (Screen.height - height) / 2, width, height));
+			float scaledWidth = width * scaleX;
+			float scaledHeight = height * scaleY;
+			GUILayout.BeginArea( new Rect((Screen.width - scaledWidth) / 2, (Screen.height - scaledHeight) / 2,
+			                              scaledWidth, scaledHeight));
 		}
 		
 		void EndPage() {
@@ -222,20 +269,20 @@ namespace GUIs {
 		
 		void MainPauseMenu() {
 			BeginPage(200,200);
-			if (GUILayout.Button (IsBeginning() ? "Play" : "Continue")) {
+			if (GUILayout.Button (IsBeginning() ? "Play" : "Continue", fontScaleButton)) {
 				UnPauseGame();				
 			}
-			if (GUILayout.Button ("Options")) {
+			if (GUILayout.Button ("Options", fontScaleButton)) {
 				currentPage = Page.Options;
 			}
-			if (GUILayout.Button ("Credits")) {
+			if (GUILayout.Button ("Credits", fontScaleButton)) {
 				currentPage = Page.Credits;
 			}
 			// TODO: Restart option
 			//if (!IsBeginning() && GUILayout.Button ("Restart")) {
 				
 			//}
-			if (GUILayout.Button ("Quit")) {
+			if (GUILayout.Button ("Quit", fontScaleButton)) {
 				currentPage = Page.Quit;
 			}
 			EndPage();

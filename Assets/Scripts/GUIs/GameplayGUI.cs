@@ -10,9 +10,17 @@ namespace GUIs {
 
 		public GUIStyle distanceCounterStyle;
 
+		int nativeWidth = 480;
+		int nativeHeight = 270;
+		float scaleX;
+		float scaleY;
+
 		// Use this for initialization
 		void Start () {
-			drawRect = new Rect(10, Screen.height - 20, 50, 10);
+			scaleX = Screen.width / nativeWidth;
+			scaleY = Screen.height / nativeHeight;
+			drawRect = new Rect(10 * scaleX, Screen.height - 20 * scaleY, 50 * scaleX, 10 * scaleY);
+			distanceCounterStyle.fontSize = (int)(16 * scaleX);
 		}
 		
 		// Update is called once per frame
