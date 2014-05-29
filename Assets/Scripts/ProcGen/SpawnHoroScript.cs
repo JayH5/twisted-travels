@@ -23,8 +23,6 @@ public class SpawnHoroScript : MonoBehaviour {
 	
 	void Spawn()
 	{
-		index = Random.Range (0, platforms.GetLength (0)); //get a random platform from the platforms array
-
 		if (ProcGenCounter.platCountLeft == 1 && ProcGenCounter.platCountUp == 1 && ProcGenCounter.platCountDown == 1) //must go left otherwise it creates a closed square
 		{
 			//get the offset depending on the size of the platform
@@ -84,6 +82,7 @@ public class SpawnHoroScript : MonoBehaviour {
 		}
 		else //random
 		{
+			index = Random.Range (0, platforms.GetLength (0)); //get a random platform from the platforms array
 			//print (index);
 			
 			int dice = Random.Range (0, 2); //decide weather the platform if going left or right

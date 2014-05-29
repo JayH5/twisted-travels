@@ -23,8 +23,6 @@ public class SpawnVertScript : MonoBehaviour {
 	
 	void Spawn()
 	{
-		index = Random.Range (0, platforms.GetLength (0)); //get a random platform from the platforms array
-
 		if (ProcGenCounter.platCountLeft == 1 && ProcGenCounter.platCountUp == 1 && ProcGenCounter.platCountRight == 1) //must go up otherwise it creates a closed square
 		{
 			//get the offset depending on the size of the platform
@@ -89,6 +87,7 @@ public class SpawnVertScript : MonoBehaviour {
 		}
 		else //random
 		{
+			index = Random.Range (0, platforms.GetLength (0)); //get a random platform from the platforms array
 			//print (index);
 			
 			int dice = Random.Range (0, 2); //decide weather the platform if going up or down
