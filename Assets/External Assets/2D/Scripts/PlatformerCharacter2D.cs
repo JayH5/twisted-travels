@@ -63,6 +63,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 			if (!value && isGrounded)
 			{
 				flytiming = true;
+				flyTimer = 0;
 			}
 
 			if (value && !isGrounded)
