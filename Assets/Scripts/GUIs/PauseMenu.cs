@@ -194,8 +194,8 @@ namespace GUIs {
 		}
 		
 		void GameOverScreen() {
-			BeginPage(2002,200);
-			GUILayout.Button ("Game Over! Your score is:" + character.Distance , fontScaleButton);
+			BeginPage(200,200);
+			GUILayout.Label (string.Format("Game Over! You ran {0}m", (int)character.Distance), fontScaleLabel);
 			if (GUILayout.Button ("Try Again" , fontScaleButton))
 			{
 				startTime =0f;

@@ -95,7 +95,15 @@ public class RobotShootScript : MonoBehaviour {
 
 		if (childRocket != null)
 		{
-			if(pcs.upDown == 1) //up 
+			if (daddy.gameObject.transform.rotation.z == 0) //normal
+			{
+				childRocket.rigidbody2D.AddForce(new Vector2(-20f,0));
+			}
+			else if (daddy.gameObject.transform.rotation.z > 0.9) //upside down
+			{	
+				childRocket.rigidbody2D.AddForce(new Vector2(20f,0));
+			}
+			else if(pcs.upDown == 1) //up 
 			{	
 				childRocket.rigidbody2D.AddForce(new Vector2(0,-20f));
 			}	
@@ -103,14 +111,8 @@ public class RobotShootScript : MonoBehaviour {
 			{
 				childRocket.rigidbody2D.AddForce(new Vector2(0,20f));
 			}
-			else if (daddy.gameObject.transform.rotation.z > 0.9) //upside down
-			{	
-				childRocket.rigidbody2D.AddForce(new Vector2(20f,0));
-			}
-			else //normal
-			{
-				childRocket.rigidbody2D.AddForce(new Vector2(-20f,0));
-			}
+
+
 
 		}
 	} 

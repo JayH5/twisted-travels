@@ -23,6 +23,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	public AudioClip jumpSound;
 	public AudioClip dashSound;
 	public AudioClip rotateSound;
+	public AudioClip boxFall;
 
 	public ParticleSystem dashParticle;
 
@@ -36,6 +37,8 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	private int currentRotation = 0;
 	private int targetRotation = 0;
 	private float flyTimer = 0.0f;
+
+	private bool immune = false;
 
 	public bool Dead
 	{
@@ -134,18 +137,18 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	}
 	bool isSlacking = false;
 
-	/// <summary>
-	/// Keep track of the player's speed as it collides into things. If too much speed is lost -> DEATH
-	/// </summary>
-	private float collisionStartSpeed;
-	public float maxFractionSpeedLoss = 0.6f;
 	public bool enableSpeedCutoff = false;
+
 
 	public EffectsPlayer effectsPlayer;
 
 	private float originalMaxSpeed;
 	public float absoluteMaxSpeed = 12.0f;
 	public float linearSpeedupPer100m = 0.05f;
+	public float minimumSpeed = 0.5f;
+	public float gracePeriod = 5.0f; // 1.5 seconds
+
+	private float startTime;
 
 	void Awake()
 	{
@@ -160,6 +163,12 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 		previousPosition = transform.position;
 		originalMaxSpeed = maxSpeed;
+
+	}
+
+	void Start()
+	{
+		startTime = Time.realtimeSinceStartup;
 	}
 
 	void FixedUpdate()
@@ -210,13 +219,26 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		// Update the distance tracking - slightly hax distance calculation but should be fine
 		distance += Vector3.Dot(transform.position - previousPosition, transform.right);
 		previousPosition = transform.position;
+
+		updateSpeed ();
 	}
 
 	void updateSpeed()
 	{
 		if (maxSpeed < absoluteMaxSpeed)
 		{
-			maxSpeed = originalMaxSpeed * linearSpeedupPer100m * distance / 100.0f;
+			float speedup = originalMaxSpeed * linearSpeedupPer100m * distance / 100.0f;
+			maxSpeed = originalMaxSpeed + speedup;
+		}
+		if (enableSpeedCutoff)
+		{
+			float currentSpeed = Vector2.Dot(rigidbody2D.velocity, transform.right);
+			float time = Time.realtimeSinceStartup - startTime;
+			if ((currentSpeed < minimumSpeed) && (time > gracePeriod) && immune == false)
+			{
+				dead = true;
+				startTime = Time.realtimeSinceStartup;
+			}
 		}
 	}
 
@@ -361,7 +383,11 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 			Debug.Log("Collided with Wall: You DEAD!");
 			dead = true;
 		}
-		collisionStartSpeed = Vector2.Dot(rigidbody2D.velocity, transform.right);
+		else if(collider.tag == "FallTrigger")
+		{
+			AudioSource.PlayClipAtPoint(boxFall, new Vector3 (0,0,0));
+			collider.tag = "Untagged";
+		}
 	}
 
 	public void OnCollisionExit(Collider2D collider)
@@ -371,15 +397,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	public void OnCollisionStay(Collider2D collider)
 	{
-		if (enableSpeedCutoff)
-		{
-			float currentSpeed = Vector2.Dot(rigidbody2D.velocity, transform.right);
-			if (currentSpeed < collisionStartSpeed * (1.0f - maxFractionSpeedLoss))
-			{
-				Debug.Log ("Speed went too low! From: " + collisionStartSpeed + ", to: " + currentSpeed);
-				dead = true;
-			}
-		}
+		// Nothing to do for now
 	}
 
 	private bool checkForUpcomingCliff()
@@ -449,6 +467,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	//
 	IEnumerator rotationAnimation(Quaternion from, Quaternion to)
 	{
+		immune = true;
 		for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / rotationTime)
 		{
 			transform.rotation = Quaternion.Slerp(from, to, i);
@@ -461,6 +480,8 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 		// Restore pre-rotation speed
 		rigidbody2D.velocity = transform.right * preRotationVelocity * postRotationBoostFraction;
+
+		immune = false;
 	}
 
 	IEnumerator dashAnimation()
