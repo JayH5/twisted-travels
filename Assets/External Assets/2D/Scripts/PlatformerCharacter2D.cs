@@ -24,8 +24,6 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	public AudioClip dashSound;
 	public AudioClip rotateSound;
 
-
-
 	public ParticleSystem dashParticle;
 
 	Animator anim;										// Reference to the player's animator component.
@@ -37,12 +35,13 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	private int currentRotation = 0;
 	private int targetRotation = 0;
-	private float flyTimer;
-	private bool flytiming;
+	private float flyTimer = 0.0f;
 
 	public bool Dead
-	{ get { return dead; }}
-	private bool dead;
+	{
+		get { return dead; }
+	}
+	private bool dead = false;
 	
 	private RotationDirection currentRotationDirection = RotationDirection.None;
 
@@ -60,16 +59,18 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		get { return isGrounded; }
 		set
 		{
-			if (!value && isGrounded)
+			if (value != isGrounded)
 			{
-				flytiming = true;
-				flyTimer = 0;
-			}
-
-			if (value && !isGrounded)
-			{
-				flytiming= false;
-				flyTimer = 0;
+				// Becoming ungrounded
+				if (isGrounded)
+				{
+					flyTimer = flyTimeBeforeDieTime;
+				}
+				// Becoming grounded
+				else
+				{
+					flyTimer = 0;
+				}
 			}
 
 			isGrounded = value;
@@ -147,8 +148,6 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		dashParticle.Stop ();
 
 		previousPosition = transform.position;
-		dead = false;
-		flyTimer = 0.0f;
 	}
 
 	void FixedUpdate()
@@ -181,6 +180,15 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 			dashCoolDown -= Time.deltaTime;
 		}
 
+		if (flyTimer > 0.0f)
+		{
+			flyTimer -= Time.deltaTime;
+			if (flyTimer < 0.0f)
+			{
+				dead = true;
+			}
+		}
+
 		// Add gravity
 		Vector2 up = new Vector2(transform.up.x, transform.up.y);
 		up.Normalize();
@@ -205,12 +213,6 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 				Debug.Log("Distance run: " + distance);
 				nextDistanceUpdate += distanceBetweenUpdates;
 			}
-		}
-
-		flyTimer += 1f * Time.deltaTime;
-		if (flyTimer >= flyTimeBeforeDieTime)
-		{
-			dead = true;
 		}
 	}
 
