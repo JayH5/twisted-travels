@@ -28,11 +28,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 400002}
   - 212: {fileID: 21200000}
+  - 61: {fileID: 6100000}
   - 114: {fileID: 11400002}
   - 50: {fileID: 5000000}
-  - 61: {fileID: 6100000}
   m_Layer: 10
-  m_Name: SmallHorozontal
+  m_Name: SmallVertical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55,8 +55,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.45483398, y: -5.64229631, z: 19.9824219}
+  m_LocalRotation: {x: 0, y: 0, z: .707106829, w: .707106829}
+  m_LocalPosition: {x: 7.96616268, y: -1.21656656, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400000}
@@ -113,7 +113,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 6200000, guid: 3626fe8e008014f6bbd19bb72937b311, type: 2}
   m_IsTrigger: 0
-  m_Size: {x: 10.8699999, y: .5}
+  m_Size: {x: 10.8699999, y: .500000119}
   m_Center: {x: 0, y: 0}
 --- !u!61 &6100002
 BoxCollider2D:
@@ -134,15 +134,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bcf2a068ee752c44ab2527ff3a00afd, type: 3}
+  m_Script: {fileID: 11500000, guid: 338677acbf405e24c801f50fb5cf61fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   platforms:
-  - {fileID: 100002, guid: f862810398f97214d838eb9456f8e591, type: 2}
-  - {fileID: 100002, guid: 308c487b0349e044ea9da92920747e84, type: 2}
-  - {fileID: 100002, guid: 8e1397f7efaa850439734ab41d689fa3, type: 2}
-  - {fileID: 100004, guid: 51255e644fc025e4e99858c20bb997cd, type: 2}
-  spawnRate: 1
+  - {fileID: 100002, guid: 1595107e647c97c42a4c4bd0c90bcb35, type: 2}
+  - {fileID: 100002, guid: 69d22e4f95218b54da8ea757d8a92124, type: 2}
+  - {fileID: 100002, guid: 2c247352ccbcb7748a7ddffa215a9619, type: 2}
+  - {fileID: 100006, guid: 9fbb1c833e059754d8489a6fc9b9d938, type: 2}
+  - {fileID: 100008, guid: 5d3bb33b08c4a834c809e3e17989ce71, type: 2}
+  - {fileID: 100008, guid: 29ea677ec9af616489194f9397d8d935, type: 2}
+  - {fileID: 100014, guid: 9321f70fe53c19a49b3925ad93001e30, type: 2}
+  - {fileID: 100006, guid: 1e797a23b2e780942b7088ea62b164bb, type: 2}
+  spawnRate: 2
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

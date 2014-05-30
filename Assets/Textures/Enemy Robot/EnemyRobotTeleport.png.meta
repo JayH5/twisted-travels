@@ -48,7 +48,7 @@ TextureImporter:
         y: 482
         width: 191
         height: 155
-      alignment: 0
+      alignment: 7
       pivot: {x: 0, y: 0}
     - name: EnemyRobotTeleport_1
       rect:
@@ -57,7 +57,7 @@ TextureImporter:
         y: 482
         width: 195
         height: 155
-      alignment: 0
+      alignment: 7
       pivot: {x: 0, y: 0}
     - name: EnemyRobotTeleport_2
       rect:
@@ -66,7 +66,7 @@ TextureImporter:
         y: 482
         width: 199
         height: 154
-      alignment: 0
+      alignment: 7
       pivot: {x: 0, y: 0}
     - name: EnemyRobotTeleport_3
       rect:
@@ -75,7 +75,7 @@ TextureImporter:
         y: 482
         width: 201
         height: 154
-      alignment: 0
+      alignment: 7
       pivot: {x: 0, y: 0}
     - name: EnemyRobotTeleport_4
       rect:
@@ -84,7 +84,7 @@ TextureImporter:
         y: 271
         width: 202
         height: 153
-      alignment: 0
+      alignment: 7
       pivot: {x: 0, y: 0}
     - name: EnemyRobotTeleport_5
       rect:
@@ -93,7 +93,7 @@ TextureImporter:
         y: 271
         width: 202
         height: 153
-      alignment: 0
+      alignment: 7
       pivot: {x: 0, y: 0}
     - name: EnemyRobotTeleport_6
       rect:
@@ -102,7 +102,7 @@ TextureImporter:
         y: 271
         width: 199
         height: 152
-      alignment: 0
+      alignment: 7
       pivot: {x: 0, y: 0}
     - name: EnemyRobotTeleport_7
       rect:
@@ -111,7 +111,7 @@ TextureImporter:
         y: 271
         width: 197
         height: 152
-      alignment: 0
+      alignment: 7
       pivot: {x: 0, y: 0}
     - name: EnemyRobotTeleport_8
       rect:
@@ -120,7 +120,7 @@ TextureImporter:
         y: 60
         width: 191
         height: 152
-      alignment: 0
+      alignment: 7
       pivot: {x: 0, y: 0}
     - name: EnemyRobotTeleport_9
       rect:
@@ -129,7 +129,7 @@ TextureImporter:
         y: 60
         width: 188
         height: 151
-      alignment: 0
+      alignment: 7
       pivot: {x: 0, y: 0}
     - name: EnemyRobotTeleport_10
       rect:
@@ -138,7 +138,7 @@ TextureImporter:
         y: 60
         width: 185
         height: 151
-      alignment: 0
+      alignment: 7
       pivot: {x: 0, y: 0}
   spritePackingTag: 
   userData: 

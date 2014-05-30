@@ -103,7 +103,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 78646900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.0591221, y: -1.39509714, z: 0}
+  m_LocalPosition: {x: -17.3314438, y: -1.85571814, z: 0}
   m_LocalScale: {x: 1.41402602, y: 1.41402102, z: 1}
   m_Children:
   - {fileID: 1072340425}
@@ -234,7 +234,7 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 99
   m_SortingLayerID: 2511236001
   m_Sprite: {fileID: 21300000, guid: 8fb98a6035269e64a998f9b56828fc4f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -313,7 +313,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 246897046}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.4964256, y: -1.15008998, z: 10}
+  m_LocalPosition: {x: -18.997551, y: -.650302529, z: 10}
   m_LocalScale: {x: 2.83195257, y: 2.83195162, z: 1}
   m_Children: []
   m_Father: {fileID: 1605694296}
@@ -379,9 +379,10 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 480625901}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.36094666, y: -3.00332785, z: 0}
+  m_LocalPosition: {x: -9.36094666, y: -3.05226469, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1821761476}
   - {fileID: 1387889637}
   m_Father: {fileID: 1544372689}
 --- !u!61 &480625903
@@ -850,7 +851,6 @@ Transform:
   m_LocalPosition: {x: 2.55702043, y: .212725997, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1821761476}
   - {fileID: 480625902}
   - {fileID: 78646901}
   m_Father: {fileID: 0}
@@ -966,7 +966,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1821761472}
   m_LocalRotation: {x: 0, y: 0, z: .382683486, w: .923879564}
-  m_LocalPosition: {x: -19.3272133, y: 1.31105292, z: 0}
+  m_LocalPosition: {x: -9.96626663, y: 4.36331749, z: 0}
   m_LocalScale: {x: 1.01582325, y: 1.01582325, z: 1}
   m_Children: []
-  m_Father: {fileID: 1544372689}
+  m_Father: {fileID: 480625902}

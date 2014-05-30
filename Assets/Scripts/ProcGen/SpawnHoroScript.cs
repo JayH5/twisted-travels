@@ -5,7 +5,7 @@ public class SpawnHoroScript : MonoBehaviour {
 	
 	//public ArrayList platforms = new ArrayList();
 	public GameObject[] platforms;
-	public int spawnRate = 2; //seconds between each platform spawn
+	public float spawnRate = 2; //seconds between each platform spawn
 	
 	private float leftRight = 0;
 	private int index;
@@ -23,6 +23,8 @@ public class SpawnHoroScript : MonoBehaviour {
 	
 	void Spawn()
 	{
+		index = Random.Range (0, platforms.GetLength (0)); //get a random platform from the platforms array
+
 		if (ProcGenCounter.platCountLeft == 1 && ProcGenCounter.platCountUp == 1 && ProcGenCounter.platCountDown == 1) //must go left otherwise it creates a closed square
 		{
 			//get the offset depending on the size of the platform
@@ -82,7 +84,6 @@ public class SpawnHoroScript : MonoBehaviour {
 		}
 		else //random
 		{
-			index = Random.Range (0, platforms.GetLength (0)); //get a random platform from the platforms array
 			//print (index);
 			
 			int dice = Random.Range (0, 2); //decide weather the platform if going left or right

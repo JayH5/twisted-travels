@@ -32,7 +32,7 @@ public class PlatformCleanupScript: MonoBehaviour {
 		if (playerTouch)
 			timer += 1.0F * Time.deltaTime;
 
-		if (timer >= 20)
+		if (timer >= 10)
 		{
 			GameObject.Destroy(gameObject);
 		}

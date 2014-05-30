@@ -238,7 +238,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	private void tryDash()
 	{
-		if (IsGrounded && dashCoolDown <= 0.0f)
+		if ( dashCoolDown <= 0.0f)
 		{
 			AudioSource.PlayClipAtPoint(dashSound, Vector3.zero);
 			dashCoolDown = dashCoolDownTime;
@@ -285,8 +285,9 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	{
 		// TODO: Die
 		Debug.Log("Collision detected with a " + collider.name);
-		if (isDashing && collider.name == "Box")
+		if (isDashing && collider.tag == "Breakable box")
 		{
+			print ("here");
 			GameObject box = collider.gameObject;
 			box.GetComponent<BoxSmash>().smash(transform.right);
 		}
