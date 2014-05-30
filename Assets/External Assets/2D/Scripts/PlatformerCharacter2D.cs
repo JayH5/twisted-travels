@@ -294,6 +294,9 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		{
 			AudioSource.PlayClipAtPoint(boxPortalSpawnSound, new Vector3 (0,0,0));
 			collider.tag = "Untagged";
+		}else if(collider.tag == "Floor")
+		{ Debug.Log("Collided with Wall: You DEAD!");
+			//Add you died logic here
 		}
 	}
 
