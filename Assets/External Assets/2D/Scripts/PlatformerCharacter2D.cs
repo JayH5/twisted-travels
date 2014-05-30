@@ -245,7 +245,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	private void tryDash()
 	{
-		if (IsGrounded && dashCoolDown <= 0.0f)
+		if (dashCoolDown <= 0.0f)
 		{
 			effectsPlayer.dash();
 			dashCoolDown = dashCoolDownTime;
@@ -302,6 +302,9 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		{
 			AudioSource.PlayClipAtPoint(boxPortalSpawnSound, new Vector3 (0,0,0));
 			collider.tag = "Untagged";
+		}else if(collider.tag == "Floor")
+		{ Debug.Log("Collided with Wall: You DEAD!");
+			//Add you died logic here
 		}
 	}
 
