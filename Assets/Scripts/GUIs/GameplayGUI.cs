@@ -25,7 +25,10 @@ namespace GUIs {
 		
 		// Update is called once per frame
 		void Update () {
-		
+			if (character.Dead) 
+			{
+
+			}
 		}
 
 		void OnGUI()

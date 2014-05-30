@@ -34,6 +34,10 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	private int currentRotation = 0;
 	private int targetRotation = 0;
+
+	public bool Dead
+	{ get { return Dead; } set;}
+	private bool dead;
 	
 	private RotationDirection currentRotationDirection = RotationDirection.None;
 
@@ -125,6 +129,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		dashParticle.Stop ();
 
 		previousPosition = transform.position;
+		dead = false;
 	}
 
 	void FixedUpdate()
@@ -304,7 +309,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 			collider.tag = "Untagged";
 		}else if(collider.tag == "Floor")
 		{ Debug.Log("Collided with Wall: You DEAD!");
-			//Add you died logic here
+			dead = true;
 		}
 	}
 
