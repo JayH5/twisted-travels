@@ -18,10 +18,13 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	public float jumpForce = 40f;			// Amount of force added when the player jumps.
 
 	public float maxSpeed = 8f;
+	public float flyTimeBeforeDieTime;
 
 	public AudioClip jumpSound;
 	public AudioClip dashSound;
 	public AudioClip rotateSound;
+
+
 
 	public ParticleSystem dashParticle;
 
@@ -34,6 +37,8 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	private int currentRotation = 0;
 	private int targetRotation = 0;
+	private float flyTimer;
+	private bool flytiming;
 
 	public bool Dead
 	{ get { return dead; }}
@@ -55,8 +60,20 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		get { return isGrounded; }
 		set
 		{
+			if (!value && isGrounded)
+			{
+				flytiming = true;
+			}
+
+			if (value && !isGrounded)
+			{
+				flytiming= false;
+				flyTimer = 0;
+			}
+
 			isGrounded = value;
 			anim.SetBool("Ground", value);
+
 		}
 	}
 	bool isGrounded = false; // Start off the ground
@@ -130,6 +147,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 		previousPosition = transform.position;
 		dead = false;
+		flyTimer = 0.0f;
 	}
 
 	void FixedUpdate()
@@ -186,6 +204,12 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 				Debug.Log("Distance run: " + distance);
 				nextDistanceUpdate += distanceBetweenUpdates;
 			}
+		}
+
+		flyTimer += 1f * Time.deltaTime;
+		if (flyTimer >= flyTimeBeforeDieTime)
+		{
+			dead = true;
 		}
 	}
 
