@@ -15,26 +15,36 @@ namespace GUIs {
 		float scaleX;
 		float scaleY;
 
+		public float x = 10;
+		public float y = 100;
+		public float w = 100;
+		public float h = 42;
+		public float xOffset = 0;
+		public float yOffset = 18;
+
+		GUIStyle blankStyle = new GUIStyle();
+
 		// Use this for initialization
 		void Start () {
 			scaleX = Screen.width / nativeWidth;
 			scaleY = Screen.height / nativeHeight;
-			drawRect = new Rect(10 * scaleX, Screen.height - 20 * scaleY, 50 * scaleX, 10 * scaleY);
-			distanceCounterStyle.fontSize = (int)(16 * scaleX);
+			drawRect = new Rect(x * scaleX, Screen.height - y * scaleY, w * scaleX, h * scaleY);
+			distanceCounterStyle.fontSize = (int)(20 * scaleX);
+			distanceCounterStyle.contentOffset = new Vector2(xOffset * scaleX, yOffset * scaleY);
 		}
 		
 		// Update is called once per frame
 		void Update () {
-			if (character.Dead) 
-			{
-
-			}
 		}
 
 		void OnGUI()
 		{
 			string distance = formatDistance(character.Distance);
 			GUI.Box(drawRect, distance, distanceCounterStyle);
+			if (GUI.Button (drawRect, "", blankStyle) && Time.timeScale != 0) // Haxx to check if paused
+			{
+				GetComponent<PauseMenu>().PauseGame();
+			}
 		}
 
 		/// <summary>

@@ -36,7 +36,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	private int targetRotation = 0;
 
 	public bool Dead
-	{ get { return Dead; } set;}
+	{ get { return dead; }}
 	private bool dead;
 	
 	private RotationDirection currentRotationDirection = RotationDirection.None;
@@ -250,7 +250,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	private void tryDash()
 	{
-		if (IsGrounded && dashCoolDown <= 0.0f)
+		if (dashCoolDown <= 0.0f)
 		{
 			effectsPlayer.dash();
 			dashCoolDown = dashCoolDownTime;

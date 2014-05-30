@@ -48,9 +48,11 @@ namespace GUIs {
 		public Texture[] crediticons;
 		
 		public enum Page {
-			None,Main,Options,Credits,Quit
+			None,Main,Options,Credits,Quit,GameOver
 		}
-		
+
+		public PlatformerCharacter2D character;
+
 		private Page currentPage;
 		
 		private float[] fpsarray;
@@ -68,6 +70,7 @@ namespace GUIs {
 
 		public Gestures.GestureHandler gestureHandler;
 		public EffectsPlayer effectsPlayer;
+		public MusicPlayer musicPlayer;
 		
 		void Start() {
 			fpsarray = new float[Screen.width];
@@ -94,7 +97,7 @@ namespace GUIs {
 				FPSUpdate();
 			}
 			
-			if (Input.GetKeyDown("escape") || Input.GetKeyDown(KeyCode.Escape))
+			if ((Input.GetKeyDown("escape") || Input.GetKeyDown(KeyCode.Escape)))
 			{
 				switch (currentPage) 
 				{
@@ -106,12 +109,23 @@ namespace GUIs {
 					if (!IsBeginning()) 
 						UnPauseGame(); 
 					break;
+				
+				case Page.GameOver:
+					Application.LoadLevel ("Main");
+					break;
 					
 				default: 
 					currentPage = Page.Main;
 					break;
 				}
 			}
+
+			if (!IsBeginning () && character.Dead && !IsGamePaused()) 
+			{
+				PauseGame();
+			}
+
+		
 		}
 
 		/// <summary>
@@ -142,6 +156,7 @@ namespace GUIs {
 				case Page.Options: ShowToolbar(); break;
 				case Page.Credits: ShowCredits(); break;
 				case Page.Quit: ShowQuitConfirm(); break;
+				case Page.GameOver: GameOverScreen(); break;
 				}
 			}   
 		}
@@ -170,7 +185,7 @@ namespace GUIs {
 		
 		void ShowBackButton() {
 			float x = 20 * scaleX;
-			float y = Screen.height - 50 * scaleY;
+			float y = 20 * scaleY;
 			float w = 50 * scaleX;
 			float h = 20 * scaleY;
 			if (GUI.Button(new Rect(x, y, w, h), "Back", fontScaleButton)) {
@@ -178,6 +193,18 @@ namespace GUIs {
 			}
 		}
 		
+		void GameOverScreen() {
+			BeginPage(2002,200);
+			GUILayout.Button ("Game Over! Your score is:" + character.Distance , fontScaleButton);
+			if (GUILayout.Button ("Try Again" , fontScaleButton))
+			{
+				startTime =0f;
+				Application.LoadLevel ("Main");
+			}
+
+			EndPage();
+		}
+
 		void ShowDevice() {
 			GUILayout.Label("Unity player version "+Application.unityVersion, fontScaleLabel);
 			GUILayout.Label("Graphics: "+SystemInfo.graphicsDeviceName+" "+
@@ -202,9 +229,7 @@ namespace GUIs {
 		}
 		
 		void Settings() {
-			if (GUILayout.Toggle(true, "Game music", fontScaleToggle)) {
-				// TODO
-			}
+			musicPlayer.Muted = !GUILayout.Toggle(!musicPlayer.Muted, "Game music", fontScaleToggle);
 			effectsPlayer.muted = !GUILayout.Toggle(!effectsPlayer.muted, "Sound effects", fontScaleToggle);
 			gestureHandler.inverted = GUILayout.Toggle(gestureHandler.inverted, "Invert controls", fontScaleToggle);
 		}
@@ -307,11 +332,19 @@ namespace GUIs {
 			}
 		}
 		
-		void PauseGame() {
+		public void PauseGame() {
 			savedTimeScale = Time.timeScale;
 			Time.timeScale = 0;
 			AudioListener.pause = true;
-			currentPage = Page.Main;
+			if (!character.Dead) 
+			{
+				currentPage = Page.Main;						
+			}
+			else 
+			{
+				currentPage = Page.GameOver;
+			}
+
 		}
 		
 		void UnPauseGame() {
