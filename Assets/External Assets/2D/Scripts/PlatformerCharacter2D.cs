@@ -143,6 +143,10 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	public EffectsPlayer effectsPlayer;
 
+	private float originalMaxSpeed;
+	public float absoluteMaxSpeed = 12.0f;
+	public float linearSpeedupPer100m = 0.05f;
+
 	void Awake()
 	{
 		anim = GetComponent<Animator>();
@@ -155,6 +159,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		dashParticle.Stop ();
 
 		previousPosition = transform.position;
+		originalMaxSpeed = maxSpeed;
 	}
 
 	void FixedUpdate()
@@ -205,6 +210,14 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		// Update the distance tracking - slightly hax distance calculation but should be fine
 		distance += Vector3.Dot(transform.position - previousPosition, transform.right);
 		previousPosition = transform.position;
+	}
+
+	void updateSpeed()
+	{
+		if (maxSpeed < absoluteMaxSpeed)
+		{
+			maxSpeed = originalMaxSpeed * linearSpeedupPer100m * distance / 100.0f;
+		}
 	}
 
 	void Update()

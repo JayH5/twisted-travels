@@ -177,7 +177,10 @@ MonoBehaviour:
   debug: 0
   cameraScript: {fileID: 599374075}
   maxFractionSpeedLoss: .949999988
+  enableSpeedCutoff: 0
   effectsPlayer: {fileID: 764522477}
+  absoluteMaxSpeed: 12
+  linearSpeedupPer100m: .0500000007
 --- !u!50 &78646905
 Rigidbody2D:
   m_ObjectHideFlags: 0
