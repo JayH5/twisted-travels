@@ -148,14 +148,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d08f91df3bd212f429df17f53ce2f364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashCoolDownTime: 1
-  dashForce: 25
-  dashDuration: .5
+  dashCoolDownTime: .5
+  dashForce: 20
+  dashDuration: .25
   slackCoolDownTime: 2
   slackForce: 4
   slackDuration: 2
   runForce: 4
-  jumpForce: 250
+  jumpForce: 325
   maxSpeed: 8
   flyTimeBeforeDieTime: 3
   jumpSound: {fileID: 0}
@@ -164,7 +164,7 @@ MonoBehaviour:
   boxFall: {fileID: 8300000, guid: 86449e0937d1f984f84d4bfec75f9b42, type: 3}
   dashParticle: {fileID: 458917994}
   boxPortalSpawnSound: {fileID: 8300000, guid: aa8802e81883daf4b85b7863442c107a, type: 3}
-  gravityAcceleration: -9.80000019
+  gravityAcceleration: -15
   rotationTime: .400000006
   postRotationBoostFraction: .699999988
   floorLayerMask:
