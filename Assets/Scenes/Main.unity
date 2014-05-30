@@ -3,7 +3,7 @@
 --- !u!29 &1
 SceneSettings:
   m_ObjectHideFlags: 0
-  m_PVSData:
+  m_PVSData: 
   m_PVSObjectsArray: []
   m_PVSPortalsArray: []
   m_OcclusionBakeSettings:
@@ -131,10 +131,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e8a5248462fa4d3eb37ee09e7837be3, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   minMovement: 20
   enableKeyboardDebug: 1
+  inverted: 0
 --- !u!114 &78646904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,8 +146,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d08f91df3bd212f429df17f53ce2f364, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   dashCoolDownTime: 2
   dashForce: 25
   dashDuration: .5
@@ -157,6 +158,7 @@ MonoBehaviour:
   jumpForce: 250
   maxSpeed: 8
   dashParticle: {fileID: 458917994}
+  boxPortalSpawnSound: {fileID: 8300000, guid: aa8802e81883daf4b85b7863442c107a, type: 3}
   gravityAcceleration: -9.80000019
   rotationTime: .400000006
   postRotationBoostFraction: .699999988
@@ -228,7 +230,7 @@ SpriteRenderer:
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices:
+  m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
@@ -1522,7 +1524,7 @@ SpriteRenderer:
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices:
+  m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
@@ -1591,7 +1593,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 6100000, guid: 69d22e4f95218b54da8ea757d8a92124, type: 2}
       propertyPath: m_Material
-      value:
+      value: 
       objectReference: {fileID: 6200000, guid: 3626fe8e008014f6bbd19bb72937b311, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 69d22e4f95218b54da8ea757d8a92124, type: 2}
@@ -1646,8 +1648,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa9bd8d328e2e457aa85e28748a2e491, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   character: {fileID: 78646904}
 --- !u!1 &246897046
 GameObject:
@@ -1690,7 +1692,7 @@ SpriteRenderer:
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices:
+  m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
@@ -1709,8 +1711,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4accb8852c77764fb878d1a0e6b75da, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   player: {fileID: 78646904}
   moveSpeed: .949999988
 --- !u!1 &480625901
@@ -1773,7 +1775,7 @@ SpriteRenderer:
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices:
+  m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
@@ -1793,8 +1795,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07eb678b2324f924c807874b2430f9e5, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   upDown: -1
 --- !u!50 &480625906
 Rigidbody2D:
@@ -1865,7 +1867,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 21200000, guid: f7906de6d98d5594fa16c43c54c949fe, type: 2}
       propertyPath: m_Sprite
-      value:
+      value: 
       objectReference: {fileID: 21300000, guid: e99cb196706446d4ab9c63979110de4e,
         type: 3}
     - target: {fileID: 11400000, guid: f7906de6d98d5594fa16c43c54c949fe, type: 2}
@@ -1967,8 +1969,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a888a0d72552849a4a3039ca4cca03fd, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   target: {fileID: 78646901}
   shiftDuration: .300000012
 --- !u!1 &764522473
@@ -1983,7 +1985,7 @@ GameObject:
   - 114: {fileID: 764522474}
   m_Layer: 0
   m_Name: MusicPlayer
-  m_TagString:
+  m_TagString: 
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 67
   m_StaticEditorFlags: 0
@@ -1997,8 +1999,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6dec44e99bd464aefa728e7fa0f418a0, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   clips:
   - {fileID: 8300000, guid: 9ba85ff0ab15a42f58c0a86706151fab, type: 3}
   - {fileID: 8300000, guid: fb02dd248251c4b3cb89c314aab7a75d, type: 3}
@@ -2012,7 +2014,7 @@ AudioSource:
   serializedVersion: 3
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: .660000026
+  m_Volume: .600000024
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2156,7 +2158,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 21200000, guid: f7906de6d98d5594fa16c43c54c949fe, type: 2}
       propertyPath: m_Sprite
-      value:
+      value: 
       objectReference: {fileID: 21300000, guid: e99cb196706446d4ab9c63979110de4e,
         type: 3}
     m_RemovedComponents: []
@@ -2175,8 +2177,8 @@ GameObject:
   - 61: {fileID: 1072340426}
   - 114: {fileID: 1072340427}
   m_Layer: 0
-  m_Name: GroundTrigger
-  m_TagString: Untagged
+  m_Name: BoxPortal
+  m_TagString: BoxPortal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2212,8 +2214,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 130e135545f4ac34e99d45c460f029df, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   box: {fileID: 100000, guid: f7906de6d98d5594fa16c43c54c949fe, type: 2}
 --- !u!61 &797834278
 BoxCollider2D:
@@ -2256,7 +2258,7 @@ SpriteRenderer:
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices:
+  m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
@@ -2296,7 +2298,7 @@ ParticleSystemRenderer:
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 2100000, guid: a8a1d20f7214a9d46a9dbc522e8ba826, type: 2}
-  m_SubsetIndices:
+  m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
@@ -3423,8 +3425,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd72fb4a0e36844ceacb6169edd78f1f, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   character: {fileID: 78646904}
 --- !u!1 &1343770214
 GameObject:
@@ -3499,7 +3501,7 @@ SpriteRenderer:
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices:
+  m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
@@ -3519,8 +3521,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0508d1a0288094a5ba600c6d88a6e147, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   smashForce: 50
 --- !u!114 &1343770220
 MonoBehaviour:
@@ -3532,8 +3534,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1fdb0d3e76d72f443bb6eb67e73608ed, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1387889632
 GameObject:
   m_ObjectHideFlags: 0
@@ -3563,8 +3565,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1bcf2a068ee752c44ab2527ff3a00afd, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   platforms:
   - {fileID: 100002, guid: f862810398f97214d838eb9456f8e591, type: 2}
   - {fileID: 100002, guid: 308c487b0349e044ea9da92920747e84, type: 2}
@@ -3585,7 +3587,7 @@ Renderer:
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices:
+  m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
@@ -3664,8 +3666,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c7d604e94781dc4c9f1fdd788af8cd7, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1605694295
 GameObject:
   m_ObjectHideFlags: 0
@@ -3807,7 +3809,7 @@ SpriteRenderer:
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices:
+  m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
@@ -3838,8 +3840,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0508d1a0288094a5ba600c6d88a6e147, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   smashForce: 50
 --- !u!114 &2029204319
 MonoBehaviour:
@@ -3851,8 +3853,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1fdb0d3e76d72f443bb6eb67e73608ed, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2109667729
 GameObject:
   m_ObjectHideFlags: 0
@@ -3879,11 +3881,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b7a797f2ed044dbf8b8e8ad816fc362, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   character: {fileID: 78646904}
   distanceCounterStyle:
-    m_Name:
+    m_Name: 
     m_Normal:
       m_Background: {fileID: 0}
       m_TextColor: {r: 1, g: 1, b: 1, a: 1}
@@ -3961,8 +3963,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de0517cfa336d46938214796161dacde, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   skin: {fileID: 0}
   mat: {fileID: 0}
   lowFPSColor: {r: 1, g: 0, b: 0, a: 1}
@@ -4018,9 +4020,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1bafd8505063e43baa72fe75b387e55c, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   jumpSound: {fileID: 8300000, guid: b02f8486ece4b42d9a6ab3bd1b7d1fc2, type: 3}
   dashSound: {fileID: 8300000, guid: a7c8f53ec381545a386bf0ea687cd673, type: 3}
   rotateSound: {fileID: 8300000, guid: 79a9b8fa8bb4d4fc3891a2389a61b853, type: 3}
-  enabled: 1
+  muted: 0

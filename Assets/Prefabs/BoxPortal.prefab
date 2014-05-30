@@ -14,7 +14,7 @@ GameObject:
   - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: BoxPortal
-  m_TagString: Untagged
+  m_TagString: BoxPortal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: -.00140485109, w: -.999999046}
-  m_LocalPosition: {x: 6.69789219, y: .774524689, z: -19.9824219}
+  m_LocalPosition: {x: -2.87701607, y: -1.54028797, z: -19.9824219}
   m_LocalScale: {x: 1.35364878, y: 1.3536495, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
