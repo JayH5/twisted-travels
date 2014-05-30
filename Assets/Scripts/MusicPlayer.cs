@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MusicPlayerC : MonoBehaviour {
-
+public class MusicPlayer : MonoBehaviour {
 
 	public AudioClip[] clips;
+
+	public bool Muted
+	{
+		get { return audio.mute; }
+		set { audio.mute = value; }
+	}
 
 	// Use this for initialization
 	void Start () {

@@ -236,7 +236,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	private void tryDash()
 	{
-		if (IsGrounded && dashCoolDown <= 0.0f)
+		if (dashCoolDown <= 0.0f)
 		{
 			effectsPlayer.dash();
 			dashCoolDown = dashCoolDownTime;

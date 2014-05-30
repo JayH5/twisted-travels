@@ -68,6 +68,7 @@ namespace GUIs {
 
 		public Gestures.GestureHandler gestureHandler;
 		public EffectsPlayer effectsPlayer;
+		public MusicPlayer musicPlayer;
 		
 		void Start() {
 			fpsarray = new float[Screen.width];
@@ -202,9 +203,7 @@ namespace GUIs {
 		}
 		
 		void Settings() {
-			if (GUILayout.Toggle(true, "Game music", fontScaleToggle)) {
-				// TODO
-			}
+			musicPlayer.Muted = !GUILayout.Toggle(!musicPlayer.Muted, "Game music", fontScaleToggle);
 			effectsPlayer.muted = !GUILayout.Toggle(!effectsPlayer.muted, "Sound effects", fontScaleToggle);
 			gestureHandler.inverted = GUILayout.Toggle(gestureHandler.inverted, "Invert controls", fontScaleToggle);
 		}
