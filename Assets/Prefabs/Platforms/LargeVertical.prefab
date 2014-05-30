@@ -33,7 +33,7 @@ GameObject:
   - 61: {fileID: 6100000}
   m_Layer: 10
   m_Name: LargeVertical
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,7 +72,7 @@ GameObject:
   - 114: {fileID: 11400008}
   m_Layer: 0
   m_Name: BoxPortal
-  m_TagString: Untagged
+  m_TagString: BoxPortal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

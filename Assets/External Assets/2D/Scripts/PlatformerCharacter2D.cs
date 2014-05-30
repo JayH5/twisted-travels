@@ -18,12 +18,18 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	public float jumpForce = 40f;			// Amount of force added when the player jumps.
 
 	public float maxSpeed = 8f;
+	public float flyTimeBeforeDieTime;
 
 	public AudioClip jumpSound;
 	public AudioClip dashSound;
 	public AudioClip rotateSound;
 
+
+
+	public ParticleSystem dashParticle;
+
 	Animator anim;										// Reference to the player's animator component.
+	public AudioClip boxPortalSpawnSound;
 
 	public float gravityAcceleration = -9.8f; // m/s^2
 
@@ -31,6 +37,12 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	private int currentRotation = 0;
 	private int targetRotation = 0;
+	private float flyTimer;
+	private bool flytiming;
+
+	public bool Dead
+	{ get { return dead; }}
+	private bool dead;
 	
 	private RotationDirection currentRotationDirection = RotationDirection.None;
 
@@ -48,8 +60,20 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		get { return isGrounded; }
 		set
 		{
+			if (!value && isGrounded)
+			{
+				flytiming = true;
+			}
+
+			if (value && !isGrounded)
+			{
+				flytiming= false;
+				flyTimer = 0;
+			}
+
 			isGrounded = value;
 			anim.SetBool("Ground", value);
+
 		}
 	}
 	bool isGrounded = false; // Start off the ground
@@ -79,7 +103,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	Vector3 lastWallRayOrigin;
 	Vector3 lastWallRayHit;
 
-	public BasicTrackingCamera camera;
+	public BasicTrackingCamera cameraScript;
 	
 	public float Distance
 	{
@@ -108,6 +132,8 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	}
 	bool isSlacking = false;
 
+	public EffectsPlayer effectsPlayer;
+
 	void Awake()
 	{
 		anim = GetComponent<Animator>();
@@ -117,7 +143,11 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		GestureHandler handler = GetComponent<GestureHandler>();
 		handler.setSwipeReceiver(this);
 
+		dashParticle.Stop ();
+
 		previousPosition = transform.position;
+		dead = false;
+		flyTimer = 0.0f;
 	}
 
 	void FixedUpdate()
@@ -175,6 +205,12 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 				nextDistanceUpdate += distanceBetweenUpdates;
 			}
 		}
+
+		flyTimer += 1f * Time.deltaTime;
+		if (flyTimer >= flyTimeBeforeDieTime)
+		{
+			dead = true;
+		}
 	}
 
 	public void onTap()
@@ -213,7 +249,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		}
 		else
 		{
-			camera.shift(direction);
+			cameraScript.shift(direction);
 		}
 	}
 
@@ -221,7 +257,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	{
 		if (IsGrounded)
 		{
-			AudioSource.PlayClipAtPoint(jumpSound, Vector3.zero);
+			effectsPlayer.jump();
 			anim.SetBool("Ground", false);
 			rigidbody2D.AddForce(transform.up * jumpForce);
 		}
@@ -238,9 +274,9 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	private void tryDash()
 	{
-		if ( dashCoolDown <= 0.0f)
+		if (dashCoolDown <= 0.0f)
 		{
-			AudioSource.PlayClipAtPoint(dashSound, Vector3.zero);
+			effectsPlayer.dash();
 			dashCoolDown = dashCoolDownTime;
 			StartCoroutine(dashAnimation());
 		}
@@ -267,7 +303,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	private void beginRotation(RotationDirection direction)
 	{
-		AudioSource.PlayClipAtPoint(rotateSound, Vector3.zero);
+		effectsPlayer.rotate();
 
 		targetRotation = currentRotation + (int) direction;
 		currentRotationDirection = direction;
@@ -290,6 +326,15 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 			print ("here");
 			GameObject box = collider.gameObject;
 			box.GetComponent<BoxSmash>().smash(transform.right);
+		}
+
+		if(collider.tag == "BoxPortal")
+		{
+			AudioSource.PlayClipAtPoint(boxPortalSpawnSound, new Vector3 (0,0,0));
+			collider.tag = "Untagged";
+		}else if(collider.tag == "Floor")
+		{ Debug.Log("Collided with Wall: You DEAD!");
+			dead = true;
 		}
 	}
 
@@ -378,12 +423,14 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	{
 		//Debug.Log ("Dashing!");
 		isDashing = true;
+		dashParticle.Play();
 		for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / dashDuration)
 		{
 			float magnitude = Mathf.Lerp(dashForce, 0.0f, i);
 			rigidbody2D.AddForce(transform.right * magnitude);
 			yield return new WaitForFixedUpdate();
 		}
+		dashParticle.particleSystem.Stop();
 		isDashing = false;
 	}
 

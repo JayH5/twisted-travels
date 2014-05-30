@@ -53,7 +53,7 @@ GameObject:
   - 61: {fileID: 6100004}
   m_Layer: 10
   m_Name: LargeVerticalAlt1
-  m_TagString: Breakable box
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
