@@ -176,6 +176,7 @@ MonoBehaviour:
   wallRayMaxDistance: 5
   debug: 0
   cameraScript: {fileID: 599374075}
+  maxFractionSpeedLoss: .949999988
   effectsPlayer: {fileID: 764522477}
 --- !u!50 &78646905
 Rigidbody2D:

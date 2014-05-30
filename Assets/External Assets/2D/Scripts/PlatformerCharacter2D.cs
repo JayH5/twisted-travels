@@ -48,7 +48,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	// We cheat physics by preserving the player's velocity after rotating gravity
 	private float preRotationVelocity;
 	// If we restore all the velocity then things are too quick... tone it down a bit
-	public float postRotationBoostFraction = 0.7f;
+	public float postRotationBoostFraction = 0.95f;
 
 	/// <summary>
 	/// Gets or sets a value indicating whether the player is grounded.
@@ -133,6 +133,13 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		get { return isSlacking; }
 	}
 	bool isSlacking = false;
+
+	/// <summary>
+	/// Keep track of the player's speed as it collides into things. If too much speed is lost -> DEATH
+	/// </summary>
+	private float collisionStartSpeed;
+	public float maxFractionSpeedLoss = 0.6f;
+	public bool enableSpeedCutoff = false;
 
 	public EffectsPlayer effectsPlayer;
 
@@ -320,7 +327,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		StartCoroutine (rotationAnimation(from, to));
 	}
 
-	public void OnCollisionDetected(Collider2D collider)
+	public void OnCollisionEnter(Collider2D collider)
 	{
 		// TODO: Die
 		Debug.Log("Collision detected with a " + collider.name);
@@ -335,9 +342,30 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		{
 			AudioSource.PlayClipAtPoint(boxPortalSpawnSound, new Vector3 (0,0,0));
 			collider.tag = "Untagged";
-		}else if(collider.tag == "Floor")
-		{ Debug.Log("Collided with Wall: You DEAD!");
+		}
+		else if(collider.tag == "Floor")
+		{
+			Debug.Log("Collided with Wall: You DEAD!");
 			dead = true;
+		}
+		collisionStartSpeed = Vector2.Dot(rigidbody2D.velocity, transform.right);
+	}
+
+	public void OnCollisionExit(Collider2D collider)
+	{
+		// Nothing to do for now
+	}
+
+	public void OnCollisionStay(Collider2D collider)
+	{
+		if (enableSpeedCutoff)
+		{
+			float currentSpeed = Vector2.Dot(rigidbody2D.velocity, transform.right);
+			if (currentSpeed < collisionStartSpeed * (1.0f - maxFractionSpeedLoss))
+			{
+				Debug.Log ("Speed went too low! From: " + collisionStartSpeed + ", to: " + currentSpeed);
+				dead = true;
+			}
 		}
 	}
 

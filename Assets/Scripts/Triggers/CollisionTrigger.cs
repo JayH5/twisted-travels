@@ -9,17 +9,17 @@ namespace Triggers {
 		
 		void OnTriggerEnter2D(Collider2D other)
 		{
-			character.OnCollisionDetected(other);
+			character.OnCollisionEnter(other);
 		}
 		
 		void OnTriggerExit2D(Collider2D other)
 		{
-			// Nothing to do
+			character.OnCollisionExit(other);
 		}
 		
 		void OnTriggerStay2D(Collider2D other)
 		{
-			// Nothing to do
+			character.OnCollisionStay(other);
 		}
 	}
 }
