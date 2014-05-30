@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BoxSmash : MonoBehaviour {
 
-	SpriteRenderer renderer;
+	SpriteRenderer spriteRenderer;
 	float textureFadeDuration = .5f;
 	bool isSmashed = false;
 
@@ -11,7 +11,7 @@ public class BoxSmash : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		renderer = GetComponent<SpriteRenderer>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 	
 	// Update is called once per frame
@@ -38,11 +38,11 @@ public class BoxSmash : MonoBehaviour {
 	/// <returns>The fade animation.</returns>
 	IEnumerator textureFadeAnimation()
 	{
-		Color originalColor = renderer.color;
+		Color originalColor = spriteRenderer.color;
 		Color targetColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0.0f); // Transparent
 		for (float i = 0.0f; i < 1.0f; i += Time.deltaTime / textureFadeDuration)
 		{
-			renderer.color = Color.Lerp(originalColor, targetColor, i);
+			spriteRenderer.color = Color.Lerp(originalColor, targetColor, i);
 			yield return new WaitForSeconds(0);
 		}
 		Destroy(this);

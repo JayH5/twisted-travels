@@ -81,7 +81,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	Vector3 lastWallRayOrigin;
 	Vector3 lastWallRayHit;
 
-	public BasicTrackingCamera camera;
+	public BasicTrackingCamera cameraScript;
 	
 	public float Distance
 	{
@@ -109,6 +109,8 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		get { return isSlacking; }
 	}
 	bool isSlacking = false;
+
+	public EffectsPlayer effectsPlayer;
 
 	void Awake()
 	{
@@ -217,7 +219,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 		}
 		else
 		{
-			camera.shift(direction);
+			cameraScript.shift(direction);
 		}
 	}
 
@@ -225,7 +227,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	{
 		if (IsGrounded)
 		{
-			AudioSource.PlayClipAtPoint(jumpSound, Vector3.zero);
+			effectsPlayer.jump();
 			anim.SetBool("Ground", false);
 			rigidbody2D.AddForce(transform.up * jumpForce);
 		}
@@ -244,7 +246,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 	{
 		if (IsGrounded && dashCoolDown <= 0.0f)
 		{
-			AudioSource.PlayClipAtPoint(dashSound, Vector3.zero);
+			effectsPlayer.dash();
 			dashCoolDown = dashCoolDownTime;
 			StartCoroutine(dashAnimation());
 		}
@@ -271,7 +273,7 @@ public class PlatformerCharacter2D : MonoBehaviour, IGestureReceiver
 
 	private void beginRotation(RotationDirection direction)
 	{
-		AudioSource.PlayClipAtPoint(rotateSound, Vector3.zero);
+		effectsPlayer.rotate();
 
 		targetRotation = currentRotation + (int) direction;
 		currentRotationDirection = direction;

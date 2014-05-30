@@ -15,10 +15,10 @@ namespace Gestures
 
 		private IGestureReceiver gestureReceiver;
 
+		public bool inverted = false;
+
 		void Update ()
 		{
-			if (Input.GetKeyDown(KeyCode.Escape)) {	Application.Quit();	}
-
 			if (gestureReceiver == null)
 				return;
 
@@ -38,12 +38,14 @@ namespace Gestures
 			}
 			else if (Input.GetKeyDown (KeyCode.UpArrow))
 			{
-				gestureReceiver.onSwipe(SwipeDirection.Up);
+				SwipeDirection dir = !inverted ? SwipeDirection.Up : SwipeDirection.Down;
+				gestureReceiver.onSwipe(dir);
 				handled = true;
 			}
 			else if (Input.GetKeyDown (KeyCode.DownArrow))
 			{
-				gestureReceiver.onSwipe(SwipeDirection.Down);
+				SwipeDirection dir = !inverted ? SwipeDirection.Down : SwipeDirection.Up;
+				gestureReceiver.onSwipe(dir);
 				handled = true;
 			}
 			else if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -84,7 +86,10 @@ namespace Gestures
 						}
 						else
 						{
-							direction = delta.y > 0 ? SwipeDirection.Up : SwipeDirection.Down;
+							if (!inverted)
+								direction = delta.y > 0 ? SwipeDirection.Up : SwipeDirection.Down;
+							else
+								direction = delta.y > 0 ? SwipeDirection.Down : SwipeDirection.Up;
 						}
 						gestureReceiver.onSwipe(direction);
 					}
